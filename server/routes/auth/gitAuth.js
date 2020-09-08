@@ -30,15 +30,13 @@ module.exports = (app) => {
         },
         config
       )
-      .then((data) => {
-        // add the user token to user on DB
-        console.log(data.data);
-        res.send(data.data);
+      .then((response) => {
+        console.log("POST GITHUB OAUTH DATA", response.data);
+        res.send(response.data)
       });
   });
 
   app.get("/user/", (req, res, next) => {
-    // will be from DB
     const accessToken = "c974002827ea6bb2ed1f9a91291b0db4aa57a3ff";
 
     axios

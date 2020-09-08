@@ -2,6 +2,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const morgan = require('morgan')
 const user = require("./routes/auth/user");
 const DATABASE = require("../database/connect");
 
@@ -11,6 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // MIDDLEWARE
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../dist/")));

@@ -4,6 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 
+import { useSelector, useDispatch } from "react-redux";
+
 const Container = styled.div`
   display: grid;
   grid-template-columns: 50px auto 50px;
@@ -30,10 +32,6 @@ class UserSignUp extends React.Component {
     validPassword: true,
     errorMessage: "",
   };
-
-  componentDidMount() {
-    console.log(this.state);
-  }
 
   handleChange = (e) => {
     const { id, value } = e.target;
@@ -74,7 +72,7 @@ class UserSignUp extends React.Component {
       axios
         .post("/user/signup", registration, config)
         .then((response) => {
-          console.log(response);
+          console.log(response.data.token);
         })
         .catch((error) => {
           console.log(error);
