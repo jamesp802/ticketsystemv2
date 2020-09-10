@@ -1,5 +1,7 @@
 const axios = require("axios");
 
+const User = require("../../../database/schemas/userSchema");
+
 module.exports = (app) => {
   app.get("/user/signin/callback", (req, res, next) => {
     const { query } = req;
@@ -31,13 +33,19 @@ module.exports = (app) => {
         config
       )
       .then((response) => {
-        console.log("POST GITHUB OAUTH DATA", response.data);
-        res.send(response.data)
+        res
+          .cookie("git_token", response.data.access_token, {
+            //FIXME: maxage
+            maxAge: 300000,
+            httpOnly: true,
+          })
+          .status(200);
       });
   });
 
   app.get("/user/", (req, res, next) => {
-    const accessToken = "c974002827ea6bb2ed1f9a91291b0db4aa57a3ff";
+    //FIXME: !hardcoded
+    const accessToken = req.cookies.git_token;
 
     axios
       .get("https://api.github.com/user", {
@@ -46,7 +54,6 @@ module.exports = (app) => {
         },
       })
       .then((data) => {
-        console.log(data.data);
         res.send(data.data);
       });
   });

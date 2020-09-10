@@ -11,6 +11,8 @@ import rootReducer from "./redux/mainReducer";
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
+store.getState();
+
 var mountNode = document.getElementById("app");
 ReactDOM.render(
   <Provider store={store}>

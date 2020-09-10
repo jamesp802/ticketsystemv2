@@ -2,9 +2,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const morgan = require('morgan')
+const morgan = require("morgan");
 const user = require("./routes/auth/user");
 const DATABASE = require("../database/connect");
+//FIXME: var cookieSession = require('cookie-session')
+const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -12,12 +15,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // MIDDLEWARE
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../dist/")));
 
-// API ROUTES
 
 require("./routes/auth/gitAuth")(app);
 

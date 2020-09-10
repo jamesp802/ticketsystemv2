@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { FormGroup, Form, Button } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 
-import Auth from "./helpers/isAuth";
+import {getUserData} from "../../redux/actions/userActions";
 
 class Login extends React.Component {
   state = {
@@ -24,16 +24,19 @@ class Login extends React.Component {
         password: formBasicPassword,
       })
       .then((response) => {
-        if (response.data.token) {
-          this.props.login(response.data.token);
-          this.setState(() => ({
+        this.props.login().then(() => {
+          this.setState({
             redirectToReferrer: true,
-          }));
-        }
+          })
+        }).catch(err => {
+          this.setState({
+            errorMessage: `Failed to Login: ${err}`,
+          });
+        });
       })
-      .catch((error) => {
+      .catch((err) => {
         this.setState({
-          errorMessage: `Failed to Login: ${error}`,
+          errorMessage: `Failed to Login: ${err}`,
         });
       });
   };
@@ -49,6 +52,7 @@ class Login extends React.Component {
     const { from } = this.props.location.state || {
       from: { pathname: "/dash" },
     };
+    //FIXME: error message
     const { redirectToReferrer, errorMessage } = this.state;
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
@@ -73,6 +77,9 @@ class Login extends React.Component {
           <Button variant="primary" onClick={this.login}>
             Login
           </Button>
+          <Button href="https://github.com/login/oauth/authorize?client_id=d2771792fc2b807f52dd">
+            Sign In With GitHub
+          </Button>
         </Form>
       </div>
     );
@@ -81,14 +88,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (token) =>
-      dispatch({
-        type: "token",
-        token: {
-          token: token,
-          isAuth: true,
-        },
-      }),
+    login: (cb) => dispatch(getUserData(cb)),
   };
 };
 

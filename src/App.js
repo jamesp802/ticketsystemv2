@@ -8,6 +8,9 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import { connect } from "react-redux";
+import { getUserData } from "./redux/actions/userActions";
+
 import Auth from "./components/auth/helpers/isAuth";
 
 import NavBar from "./components/navigation/navbar";
@@ -19,14 +22,13 @@ import Login from "./components/auth/login";
 import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-
-  const token = useSelector((state) => state.token);
+  const user = useSelector((state) => state.user);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        token.isAuth === true ? (
+        user !== null ? (
           <Component {...props} />
         ) : (
           <Redirect
@@ -42,7 +44,24 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 class App extends React.Component {
+  state = {
+    isLoaded: false,
+  };
+
+  componentDidMount() {
+    this.props.login().then(() => {
+      this.setState({
+        isLoaded: true,
+      });
+    });
+  }
+
   render() {
+    //FIXME: isLoaded needed?
+    if (this.state.isLoaded === false) {
+      return "loading...";
+    }
+
     return (
       <>
         <NavBar />
@@ -63,4 +82,16 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: () => dispatch(getUserData()),
+  };
+};
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
