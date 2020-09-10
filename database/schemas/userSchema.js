@@ -21,6 +21,15 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
+  projects: [{
+      project_id: {type: String, unique: true},
+      project_name: {type: String, unique: true}
+    }],
+  dashboard: {
+    tables: Object,
+    tickets: Object,
+    table_order: Array,
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);

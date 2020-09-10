@@ -32,8 +32,9 @@ require("./routes/auth/gitAuth")(app);
 
 app.use("/user", user);
 
-// const userRouter = require('./routes/userRouter');
-// app.use('/api/users', userRouter);
+// require("./routes")(app);
+const apiRouter = require('./routes/');
+app.use('/api/', apiRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/"));
