@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
   gitAccess: {
     type: String,
     default: null,
-  }
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

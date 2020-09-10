@@ -1,5 +1,7 @@
 const axios = require("axios");
 
+const jwt = require("jsonwebtoken");
+const auth = require("./middleware/auth");
 const User = require("../../../database/schemas/userSchema");
 
 module.exports = (app) => {
@@ -33,24 +35,38 @@ module.exports = (app) => {
         config
       )
       .then((response) => {
-        res
-          .cookie("git_token", response.data.access_token, {
-            //FIXME: maxage
-            maxAge: 300000,
-            httpOnly: true,
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ message: "Auth Error" });
+
+        const decoded = jwt.verify(token, "randomString");
+        console.log(decoded);
+
+        let user = User.findById(decoded.user.id)
+          .then((user) => {
+            console.log(user);
+            user.gitAccess = response.data.access_token;
+            user.save();
           })
-          .status(200);
+          .then((data) => {
+            console.log(data);
+            res.redirect("/dash");
+          })
+          .catch((err) => {
+            res.send(500).json({
+              message: "ERROR: failed to save access token",
+            });
+          });
       });
   });
 
-  app.get("/user/", (req, res, next) => {
-    //FIXME: !hardcoded
-    const accessToken = req.cookies.git_token;
+  app.get("/user/", auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    const { gitAccess } = user;
 
     axios
       .get("https://api.github.com/user", {
         headers: {
-          Authorization: `token ${accessToken}`,
+          Authorization: `token ${gitAccess}`,
         },
       })
       .then((data) => {

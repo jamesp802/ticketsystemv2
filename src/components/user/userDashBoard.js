@@ -10,6 +10,8 @@ import React from "react";
 import styled from "styled-components";
 import { userData, projectData } from "../../initialData";
 
+import GitHub from "../auth/gitSignIn";
+
 import Board from "../board/board";
 
 const Container = styled.div`
@@ -41,6 +43,7 @@ class UserDashBoard extends React.Component {
         <DashBoardContainer>
           <Board dashboard={projectData.dashboard} />
         </DashBoardContainer>
+        <GitHub/>
       </Container>
     );
   }

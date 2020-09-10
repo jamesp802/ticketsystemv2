@@ -125,14 +125,17 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.cookie("token", token, {
-            //FIXME: maxage
-            maxAge: 300000,
-            httpOnly: true
-            //FIXME: secure: true requires https
-          }).status(200).json({
-            message: "Successful Login",
-          });
+          res
+            .cookie("token", token, {
+              //FIXME: maxage
+              maxAge: 6000000,
+              httpOnly: true,
+              //FIXME: secure: true requires https
+            })
+            .status(200)
+            .json({
+              message: "Successful Login",
+            });
         }
       );
     } catch (e) {
@@ -154,7 +157,7 @@ router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const user = await User.findById(req.user.id);
-    const {_id, username, email} = user
+    const { _id, username, email, gitAccess } = user;
     res.status(200).json({
       _id,
       username,
