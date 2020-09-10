@@ -4,7 +4,9 @@ import axios from "axios";
 import styled from "styled-components";
 import { Form, Button } from "react-bootstrap";
 
-import { useSelector, useDispatch } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { getUserData } from "../../redux/actions/userActions";
 
 const Container = styled.div`
   display: grid;
@@ -25,6 +27,7 @@ const ErrorMessage = styled.span`
 
 class UserSignUp extends React.Component {
   state = {
+    redirectToReferrer: false,
     formBasicEmail: "",
     formBasicPassword: "",
     formBasicPasswordCheck: "",
@@ -35,9 +38,12 @@ class UserSignUp extends React.Component {
 
   handleChange = (e) => {
     const { id, value } = e.target;
-    this.setState({
-      [id]: value,
-    }, console.log(this.state));
+    this.setState(
+      {
+        [id]: value,
+      },
+      console.log(this.state)
+    );
   };
 
   handleSubmit = () => {
@@ -72,7 +78,11 @@ class UserSignUp extends React.Component {
       axios
         .post("/user/signup", registration, config)
         .then((response) => {
-          console.log(response.data.token);
+          this.props.login().then(() => {
+            this.setState({
+              redirectToReferrer: true,
+            });
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -81,7 +91,11 @@ class UserSignUp extends React.Component {
   };
 
   render() {
-    const { errorMessage } = this.state;
+    const { redirectToReferrer, errorMessage } = this.state;
+    if (redirectToReferrer === true) {
+      return <Redirect to="/dash" />;
+    }
+
     return (
       <Container>
         <FormContainer>
@@ -129,4 +143,10 @@ class UserSignUp extends React.Component {
   }
 }
 
-export default UserSignUp;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (cb) => dispatch(getUserData(cb)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(UserSignUp);

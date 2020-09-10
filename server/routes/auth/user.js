@@ -66,9 +66,17 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.status(200).json({
-            token,
-          });
+          res
+            .cookie("token", token, {
+              //FIXME: maxage
+              maxAge: 6000000,
+              httpOnly: true,
+              //FIXME: secure: true requires https
+            })
+            .status(200)
+            .json({
+              message: "Successful Login",
+            });
         }
       );
     } catch (err) {

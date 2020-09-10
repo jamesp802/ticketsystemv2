@@ -77,8 +77,8 @@ class Login extends React.Component {
           <Button variant="primary" onClick={this.login}>
             Login
           </Button>
-          <Button href="https://github.com/login/oauth/authorize?client_id=d2771792fc2b807f52dd">
-            Sign In With GitHub
+          <Button href="/signup">
+            Sign Up
           </Button>
         </Form>
       </div>
