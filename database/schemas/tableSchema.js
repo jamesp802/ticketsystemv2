@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const TableSchema = mongoose.Schema({
-  table_name: "Assigned",
-  ticket_ids: ["assigned_ticket_id_1", "assigned_ticket_id_2"],
+  table_name: String,
+  ticket_ids: Array,
 });
 
-module.exports = TableSchema;
+module.exports = mongoose.model("table", TableSchema);

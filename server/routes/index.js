@@ -11,8 +11,8 @@ var itemRouter = express.Router({mergeParams: true});
 // you can nest routers by attaching them as middleware:
 
 router.use('/projects', projectRouter);
-router.route('/tables', tableRouter);
-router.route('/tickets', ticketRouter);
+router.use('/tables', tableRouter);
+router.use('/tickets', ticketRouter);
 router.route('/teams', teamRouter);
 
 module.exports = router;
