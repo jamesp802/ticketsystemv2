@@ -10,14 +10,18 @@ import React from "react";
 import styled from "styled-components";
 import { userData, projectData } from "../../initialData";
 
+import { connect } from "react-redux";
+import { getProject } from "../../redux/actions/projectActions";
+
 import GitHub from "../auth/gitSignIn";
 
 import Board from "../board/board";
+import ProjectList from "./projectList";
 
 const Container = styled.div`
-display: grid;
-grid-template-columns: 50px auto 50px;
-grid-template-rows: 50px 50px auto;
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+  grid-template-rows: 50px 50px auto;
 `;
 
 const DashBoardContainer = styled.div`
@@ -33,20 +37,43 @@ const Title = styled.div`
   grid-row-start: 2;
 `;
 
-
+const ProjectListContainer = styled.div`
+  text-align: center;
+  grid-column-start: 1;
+`;
 
 class UserDashBoard extends React.Component {
   render() {
+    const { user } = this.props;
+
     return (
       <Container>
-        <Title>Hello, {userData.username}</Title>
+        <Title>Hello, {user.username}</Title>
+        {/* <ul>
+          {user.projects.map((project) => (
+            <li>{project.project_name}</li>
+          ))}
+        </ul> */}
+        <ProjectList />
         <DashBoardContainer>
           <Board dashboard={projectData.dashboard} />
         </DashBoardContainer>
-        <GitHub/>
+        <GitHub />
       </Container>
     );
   }
 }
 
-export default UserDashBoard;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProject: (projectId) => getProject(projectId),
+  };
+};
+
+export default connect(mapStateToProps, null)(UserDashBoard);

@@ -17,8 +17,9 @@ module.exports = (body, decodedUser) => {
 
     // Updates user projects list
     return proj.save().then((projectData) => {
-      User.findByIdAndUpdate(
-        { _id: user._id },
+      console.log(decodedUser);
+      return User.findByIdAndUpdate(
+        decodedUser.id,
         {
           $push: {
             projects: {
@@ -26,7 +27,8 @@ module.exports = (body, decodedUser) => {
               project_id: projectData._id,
             },
           },
-        }
+        },
+        { new: true }
       );
     });
   });
