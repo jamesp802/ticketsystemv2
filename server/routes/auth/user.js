@@ -165,12 +165,14 @@ router.get("/me", auth, async (req, res) => {
   try {
     // request.user is getting fetched from Middleware after token authentication
     const user = await User.findById(req.user.id);
-    const { _id, username, email, gitAccess } = user;
+    const { _id, username, email, gitAccess, projects, dashboard } = user;
     res.status(200).json({
       _id,
       username,
       email,
       gitAccess,
+      projects,
+      dashboard,
     });
   } catch (e) {
     res.sendStatus(401);

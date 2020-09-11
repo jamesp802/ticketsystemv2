@@ -16,4 +16,18 @@ router.post("/new", auth, (req, res) => {
     });
 });
 
+router.get("/:project_id", auth, (req, res) => {
+  Project.getProject(req.params.project_id)
+  //FIXME: verify ownership, public private boards, member
+  .then((project) => {
+    if (project.owners[req.user.id] === undefined) {
+      return res.sendStatus(401);
+    }
+    res.send(project);
+  }).catch(e => {
+    console.log(e);
+    res.sendStatus(404)
+  })
+})
+
 module.exports = router;

@@ -6,9 +6,7 @@ const tableRouter = require('./tables')
 const ticketRouter = require('./tickets')
 const teamRouter = require('./teams')
 
-var itemRouter = express.Router({mergeParams: true});
-
-// you can nest routers by attaching them as middleware:
+//FIXME: need to verify users are authorized to view projects
 
 router.use('/projects', projectRouter);
 router.use('/tables', tableRouter);
