@@ -18,6 +18,7 @@ import UserDashBoard from "./components/user/userDashBoard";
 import GitSignIn from "./components/auth/gitSignIn";
 import UserSignUp from "./components/auth/signup";
 import Login from "./components/auth/login";
+import ProjectOverview from "./components/project/projectOverview"
 
 import { useSelector } from "react-redux";
 
@@ -74,6 +75,7 @@ class App extends React.Component {
             <Route path="/oauth">
               <GitSignIn />
             </Route>
+            <PrivateRoute path="/dash/project/:id" component={ProjectOverview} />
             <PrivateRoute path="/dash" component={UserDashBoard} />
           </Switch>
         </Router>

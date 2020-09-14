@@ -14,7 +14,7 @@ class Ticket extends React.Component {
   render() {
     return (
       <Draggable
-        draggableId={this.props.ticket.ticket_id}
+        draggableId={this.props.ticket._id}
         index={this.props.index}
       >
         {(provided, snapshot) => (
@@ -24,7 +24,7 @@ class Ticket extends React.Component {
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            {this.props.ticket.ticket_title}
+            {this.props.ticket.ticket_name}
           </Container>
         )}
       </Draggable>

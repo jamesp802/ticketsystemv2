@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 import Ticket from "./ticket";
+import AddTicket from "./helpers/addTicket"
 
 const Container = styled.div`
   margin: 8px;
@@ -28,16 +29,20 @@ const TicketList = styled.div`
 `;
 
 class Table extends React.Component {
+
   render() {
+
+    // console.log("TABLEJS table:" , this.props.table._id)
     return (
       <Draggable
-        draggableId={this.props.table.table_id}
+        draggableId={this.props.table._id}
         index={this.props.index}
       >
         {(provided) => (
           <Container {...provided.draggableProps} ref={provided.innerRef}>
             <Title {...provided.dragHandleProps}>{this.props.table.table_name}</Title>
-            <Droppable droppableId={this.props.table.table_id}>
+            <AddTicket tableId={this.props.table._id} projectId={this.props.projectId} update={this.props.update}/>
+            <Droppable droppableId={this.props.table._id}>
               {(provided, snapshot) => (
                 <TicketList
                   ref={provided.innerRef}
@@ -46,7 +51,7 @@ class Table extends React.Component {
                 >
                   {this.props.tickets.map((ticket, index) => (
                     <Ticket
-                      key={ticket.ticket_id}
+                      key={ticket._id}
                       ticket={ticket}
                       index={index}
                     />
@@ -55,6 +60,7 @@ class Table extends React.Component {
                 </TicketList>
               )}
             </Droppable>
+
           </Container>
         )}
       </Draggable>

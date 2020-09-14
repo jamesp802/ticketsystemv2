@@ -11,7 +11,7 @@ import styled from "styled-components";
 import { userData, projectData } from "../../initialData";
 
 import { connect } from "react-redux";
-import { getProject } from "../../redux/actions/projectActions";
+// import { getProject } from "../../redux/actions/projectActions";
 
 import GitHub from "../auth/gitSignIn";
 
@@ -20,7 +20,7 @@ import ProjectList from "./projectList";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 50px;
+  grid-template-columns: 200px auto 50px;
   grid-template-rows: 50px 50px auto;
 `;
 
@@ -49,11 +49,6 @@ class UserDashBoard extends React.Component {
     return (
       <Container>
         <Title>Hello, {user.username}</Title>
-        {/* <ul>
-          {user.projects.map((project) => (
-            <li>{project.project_name}</li>
-          ))}
-        </ul> */}
         <ProjectList />
         <DashBoardContainer>
           <Board dashboard={projectData.dashboard} />
@@ -72,7 +67,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProject: (projectId) => getProject(projectId),
+    // getProject: (projectId) => getProject(projectId),
   };
 };
 

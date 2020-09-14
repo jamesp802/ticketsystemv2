@@ -30,4 +30,15 @@ router.get("/:project_id", auth, (req, res) => {
   })
 })
 
+router.post("/:project_id", auth, (req,res) => {
+  Project.updateProject(req.params.project_id, req.body.dashboard)
+  .then(() => {
+    res.sendStatus(201);
+  })
+  .catch((e) => {
+    console.log(e);
+    res.sendStatus(500)
+  })
+})
+
 module.exports = router;

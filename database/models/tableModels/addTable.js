@@ -9,6 +9,8 @@ module.exports = (table_name, project_id) => {
     table_name: table_name,
   });
 
+  console.log(table_name, project_id);
+
   return table.save().then((table) => {
     let tableData = table;
     return Project.findById(project_id).then((project) => {
@@ -16,13 +18,13 @@ module.exports = (table_name, project_id) => {
       if (project.dashboard.tables === undefined) {
         project.dashboard.tables = {
           [tableData._id]: table,
-        }
+        };
         project.dashboard.table_order.push(tableData._id);
       } else {
         project.dashboard.tables[tableData._id] = table;
         project.dashboard.table_order.push(tableData._id);
       }
-      return Project.findByIdAndUpdate(project_id, project)
+      return Project.findByIdAndUpdate(project_id, project);
     });
   });
 };
