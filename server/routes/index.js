@@ -11,6 +11,6 @@ const teamRouter = require('./teams')
 router.use('/projects', projectRouter);
 router.use('/tables', tableRouter);
 router.use('/tickets', ticketRouter);
-router.route('/teams', teamRouter);
+router.use('/teams', teamRouter);
 
 module.exports = router;

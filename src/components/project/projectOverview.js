@@ -23,6 +23,7 @@ import { withRouter } from "react-router-dom";
 
 import Board from "../board/board";
 import AddTable from "../board/helpers/addTable";
+import BuildTeam from "../board/helpers/buildTeam"
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
@@ -96,6 +97,7 @@ class ProjectOverview extends React.Component {
               update={this.getProject}
             />
           </BoardContainer>
+          <BuildTeam projectId={this.props.match.params.id} update={this.getProject}/>
         </Container>
       );
     }

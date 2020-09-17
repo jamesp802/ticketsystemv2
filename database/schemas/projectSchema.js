@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const ProjectSchema = mongoose.Schema({
   project_name: String,
@@ -8,8 +8,8 @@ const ProjectSchema = mongoose.Schema({
     tickets: Object,
     table_order: Array,
   },
-  teams: Object
-})
+  members: Object,
+});
 
 const Project = mongoose.model("project", ProjectSchema);
 
