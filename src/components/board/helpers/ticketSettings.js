@@ -57,13 +57,23 @@ class TicketSettings extends React.Component {
     });
   };
 
-  deleteTicket = (e) => {
+  deleteTicket = () => {
     const { projectId, tableId } = this.props;
     const ticketId = this.props.ticket._id;
     axios.delete(`/api/tickets/${projectId}/${tableId}/${ticketId}`).then(() => {
       this.props.update();
     });
   };
+
+  saveEdits = () => {
+    const { projectId, tableId } = this.props;
+    const ticketId = this.props.ticket._id;
+    axios.put(`/api/tickets/${projectId}/${tableId}/${ticketId}`, {
+      // ticket info here
+    }).then(() => {
+      this.props.update();
+    });
+  }
 
   render() {
     const { show, handleShow, ticket } = this.props;

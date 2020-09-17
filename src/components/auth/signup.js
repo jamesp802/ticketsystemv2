@@ -38,12 +38,9 @@ class UserSignUp extends React.Component {
 
   handleChange = (e) => {
     const { id, value } = e.target;
-    this.setState(
-      {
-        [id]: value,
-      },
-      console.log(this.state)
-    );
+    this.setState({
+      [id]: value,
+    });
   };
 
   handleSubmit = () => {
@@ -75,18 +72,13 @@ class UserSignUp extends React.Component {
         password: formBasicPassword,
       };
 
-      axios
-        .post("/user/signup", registration, config)
-        .then((response) => {
-          this.props.login().then(() => {
-            this.setState({
-              redirectToReferrer: true,
-            });
+      axios.post("/user/signup", registration, config).then((response) => {
+        this.props.login().then(() => {
+          this.setState({
+            redirectToReferrer: true,
           });
-        })
-        .catch((error) => {
-          console.log(error);
         });
+      });
     }
   };
 

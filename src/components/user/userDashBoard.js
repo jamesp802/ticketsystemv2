@@ -15,7 +15,8 @@ import { connect } from "react-redux";
 
 import GitHub from "../auth/gitSignIn";
 
-import Board from "../board/board";
+// import Board from "../board/board";
+import Board from "./userTicketBoard/userTicketBoard"
 import ProjectList from "./projectList";
 
 const Container = styled.div`
@@ -51,7 +52,8 @@ class UserDashBoard extends React.Component {
         <Title>Hello, {user.username}</Title>
         <ProjectList />
         <DashBoardContainer>
-          {/* <Board dashboard={projectData.dashboard} /> */}
+          {/* FIXME: userboard will require a seperate component and API */}
+          <Board dashboard={user.dashboard} />
         </DashBoardContainer>
         <GitHub />
       </Container>
