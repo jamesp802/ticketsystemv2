@@ -29,16 +29,24 @@ import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 200px;
+  grid-template-columns: 50px auto 50px;
   grid-template-rows: 100px auto 100px;
+  // background-color: rgb(255,255,255,0.8)
+  // background-image: url("https://www.freevector.com/uploads/vector/preview/30349/Abstract_background_vector_1.jpg")
+  background-size: cover;
+  background-repeat: norepeat;
 `;
 
 const BoardContainer = styled.div`
   grid-column-start: 2;
+  grid-row-start: 2;
 `;
 
-const AddTableContainer = styled.div`
-  grid-column-start: 3;
+const ProjectTitle = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 1;
+  text-align: center;
+  padding: 30px;
 `;
 
 class ProjectOverview extends React.Component {
@@ -51,40 +59,46 @@ class ProjectOverview extends React.Component {
   }
 
   getProject = () => {
-    this.setState({
-      isLoaded: false,
-    });
-    axios
-      .get(`/api/projects/${this.props.match.params.id}`)
-      .then(({ data }) => {
-        this.props.setSelectedProject(data);
-      })
-      .then(() => {
-        this.setState({
-          isLoaded: true,
-        });
-      });
+    this.setState(
+      {
+        isLoaded: false,
+      },
+      () => {
+        axios
+          .get(`/api/projects/${this.props.match.params.id}`)
+          .then(({ data }) => {
+            this.props.setSelectedProject(data);
+          })
+          .then(() => {
+            this.setState({
+              isLoaded: true,
+            });
+          });
+      }
+    );
   };
 
   render() {
     if (this.state.isLoaded === false) {
       return "loading...";
-    }
-    const { selectedProject } = this.props;
+    } else {
+      const { selectedProject } = this.props;
 
-    return (
-      <Container>
-        <BoardContainer>
-          <Board dashboard={selectedProject.dashboard} projectId={this.props.match.params.id} update={this.getProject}/>
-        </BoardContainer>
-        <AddTableContainer>
-          <AddTable
-            update={this.getProject}
-            projectId={this.props.match.params.id}
-          />
-        </AddTableContainer>
-      </Container>
-    );
+      return (
+        <Container>
+          <ProjectTitle>
+            <h2>{selectedProject.project_name}</h2>
+          </ProjectTitle>
+          <BoardContainer>
+            <Board
+              dashboard={selectedProject.dashboard}
+              projectId={this.props.match.params.id}
+              update={this.getProject}
+            />
+          </BoardContainer>
+        </Container>
+      );
+    }
   }
 }
 

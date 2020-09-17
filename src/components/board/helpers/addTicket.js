@@ -4,6 +4,17 @@ import axios from "axios";
 
 import { Modal, Button, Form } from "react-bootstrap";
 
+import styled from "styled-components";
+
+const AddSVG = styled.span`
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 class AddTicket extends React.Component {
   state = {
     show: false,
@@ -45,9 +56,22 @@ class AddTicket extends React.Component {
     const { show } = this.state;
     return (
       <>
-        <Button variant="primary" onClick={this.handleShow}>
-          Launch demo modal
-        </Button>
+        <AddSVG>
+          <svg
+            width="3em"
+            height="3em"
+            viewBox="0 0 16 16"
+            className="bi bi-plus"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            onClick={this.handleShow}
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+        </AddSVG>
 
         <Modal show={show} onHide={this.handleShow}>
           <Modal.Header closeButton>

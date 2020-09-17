@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 import Ticket from "./ticket";
-import AddTicket from "./helpers/addTicket"
+import AddTicket from "./helpers/addTicket";
 
 const Container = styled.div`
   margin: 8px;
@@ -12,6 +12,7 @@ const Container = styled.div`
   border-radius: 2px;
   width: 300px;
   background-color: white;
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -29,19 +30,19 @@ const TicketList = styled.div`
 `;
 
 class Table extends React.Component {
-
   render() {
-
-    // console.log("TABLEJS table:" , this.props.table._id)
     return (
-      <Draggable
-        draggableId={this.props.table._id}
-        index={this.props.index}
-      >
+      <Draggable draggableId={this.props.table._id} index={this.props.index}>
         {(provided) => (
           <Container {...provided.draggableProps} ref={provided.innerRef}>
-            <Title {...provided.dragHandleProps}>{this.props.table.table_name}</Title>
-            <AddTicket tableId={this.props.table._id} projectId={this.props.projectId} update={this.props.update}/>
+            <Title {...provided.dragHandleProps}>
+              {this.props.table.table_name}
+            </Title>
+            <AddTicket
+              tableId={this.props.table._id}
+              projectId={this.props.projectId}
+              update={this.props.update}
+            />
             <Droppable droppableId={this.props.table._id}>
               {(provided, snapshot) => (
                 <TicketList
@@ -54,13 +55,15 @@ class Table extends React.Component {
                       key={ticket._id}
                       ticket={ticket}
                       index={index}
+                      update={this.props.update}
+                      tableId={this.props.table._id}
+                      projectId={this.props.projectId}
                     />
                   ))}
                   {provided.placeholder}
                 </TicketList>
               )}
             </Droppable>
-
           </Container>
         )}
       </Draggable>

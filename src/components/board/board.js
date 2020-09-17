@@ -10,6 +10,8 @@ import { userData, projectData } from "../../initialData";
 import Table from "./table";
 import axios from "axios";
 
+import AddTable from "./helpers/addTable";
+
 const Container = styled.div`
   display: flex;
 `;
@@ -70,8 +72,6 @@ class Board extends React.Component {
           [newTable._id]: newTable,
         },
       };
-
-      console.log(newState);
       this.setState(newState, () => {
         axios.post(`/api/projects/${this.props.projectId}`, {
           dashboard: newState,
@@ -79,7 +79,6 @@ class Board extends React.Component {
       });
 
       return;
-      // update database with reorder
     }
 
     const newTicketIds = Array.from(start.ticket_ids);
@@ -105,15 +104,11 @@ class Board extends React.Component {
       },
     };
 
-    console.log("NEWSTATE: ", newState);
     this.setState(newState, () => {
       axios.post(`/api/projects/${this.props.projectId}`, {
         dashboard: newState,
       });
     });
-
-    // save to database but also update store
-    // server logic
   };
 
   render() {
@@ -124,7 +119,6 @@ class Board extends React.Component {
             <Container {...provided.droppableProps} ref={provided.innerRef}>
               {this.state.table_order.map((table_id, index) => {
                 const table = this.state.tables[table_id];
-                // console.log("BOARDJS Table: ", table);
                 const tickets = table.ticket_ids.map((ticket_id) => {
                   return this.state.tickets[ticket_id];
                 });
@@ -140,6 +134,10 @@ class Board extends React.Component {
                   />
                 );
               })}
+              <AddTable
+                update={this.props.update}
+                projectId={this.props.projectId}
+              />
             </Container>
           )}
         </Droppable>

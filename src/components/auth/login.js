@@ -5,8 +5,14 @@ import { connect } from "react-redux";
 import { FormGroup, Form, Button } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 
-import {getUserData} from "../../redux/actions/userActions";
+import { getUserData } from "../../redux/actions/userActions";
 
+import styled from "styled-components";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 class Login extends React.Component {
   state = {
     redirectToReferrer: false,
@@ -24,15 +30,18 @@ class Login extends React.Component {
         password: formBasicPassword,
       })
       .then((response) => {
-        this.props.login().then(() => {
-          this.setState({
-            redirectToReferrer: true,
+        this.props
+          .login()
+          .then(() => {
+            this.setState({
+              redirectToReferrer: true,
+            });
           })
-        }).catch(err => {
-          this.setState({
-            errorMessage: `Failed to Login: ${err}`,
+          .catch((err) => {
+            this.setState({
+              errorMessage: `Failed to Login: ${err}`,
+            });
           });
-        });
       })
       .catch((err) => {
         this.setState({
@@ -59,7 +68,7 @@ class Login extends React.Component {
     }
 
     return (
-      <div>
+      <Container>
         <Form>
           {errorMessage === "" ? null : <p>{errorMessage}</p>}
           <Form.Group controlId="formBasicEmail" onChange={this.handleChange}>
@@ -77,11 +86,9 @@ class Login extends React.Component {
           <Button variant="primary" onClick={this.login}>
             Login
           </Button>
-          <Button href="/signup">
-            Sign Up
-          </Button>
+          <Button href="/signup">Sign Up</Button>
         </Form>
-      </div>
+      </Container>
     );
   }
 }

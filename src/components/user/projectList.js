@@ -4,23 +4,30 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { ListGroup, Button } from "react-bootstrap";
+
 import { setSelectedProject } from "../../redux/actions/projectActions";
+
+import AddProject from "../project/addProject"
 
 class ProjectList extends React.Component {
   render() {
     const { projects } = this.props.user;
 
     return (
-      <ul>
+      <ListGroup>
         {projects.map((project) => (
-          <Link
-            key={project.project_id}
-            to={`/dash/project/${project.project_id}`}
-          >
-            {project.project_name}
-          </Link>
+          <ListGroup.Item key={project.project_id}>
+            <Link
+              key={project.project_id}
+              to={`/dash/project/${project.project_id}`}
+            >
+              {project.project_name}
+            </Link>
+          </ListGroup.Item>
         ))}
-      </ul>
+        <AddProject />
+      </ListGroup>
     );
   }
 }
@@ -30,6 +37,5 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-
 
 export default connect(mapStateToProps, null)(ProjectList);

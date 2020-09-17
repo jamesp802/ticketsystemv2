@@ -10,24 +10,45 @@ const Container = styled.div`
   background-color: ${(props) => (props.isDragging ? "lightblue" : "white")};
 `;
 
+import TicketSettings from "./helpers/ticketSettings";
+
 class Ticket extends React.Component {
+  state = {
+    showTicketSettings: false,
+  };
+
+  handleShowTicketSettings = (e) => {
+    //FIXME: take id
+    this.setState({
+      showTicketSettings: !this.state.showTicketSettings,
+    });
+  };
+
   render() {
     return (
-      <Draggable
-        draggableId={this.props.ticket._id}
-        index={this.props.index}
-      >
-        {(provided, snapshot) => (
-          <Container
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-            isDragging={snapshot.isDragging}
-          >
-            {this.props.ticket.ticket_name}
-          </Container>
-        )}
-      </Draggable>
+      <>
+        <Draggable draggableId={this.props.ticket._id} index={this.props.index}>
+          {(provided, snapshot) => (
+            <Container
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+              isDragging={snapshot.isDragging}
+              onClick={this.handleShowTicketSettings}
+            >
+              {this.props.ticket.ticket_name}
+            </Container>
+          )}
+        </Draggable>
+        <TicketSettings
+          show={this.state.showTicketSettings}
+          handleShow={this.handleShowTicketSettings}
+          ticket={this.props.ticket}
+          update={this.props.update}
+          tableId={this.props.tableId}
+          projectId={this.props.projectId}
+        />
+      </>
     );
   }
 }

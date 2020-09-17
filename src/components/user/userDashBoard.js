@@ -51,7 +51,7 @@ class UserDashBoard extends React.Component {
         <Title>Hello, {user.username}</Title>
         <ProjectList />
         <DashBoardContainer>
-          <Board dashboard={projectData.dashboard} />
+          {/* <Board dashboard={projectData.dashboard} /> */}
         </DashBoardContainer>
         <GitHub />
       </Container>
