@@ -131,6 +131,7 @@ class Board extends React.Component {
                     index={index}
                     projectId={this.props.projectId}
                     update={this.props.update}
+                    members={this.props.members}
                   />
                 );
               })}

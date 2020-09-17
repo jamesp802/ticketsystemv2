@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const TicketSchema = mongoose.Schema({
   ticket_name: String,
   ticket_description: String,
-  assignedTo: String,
+  assignedTo: Array,
   createdAt: { type: Date, default: Date.now() },
 });
 

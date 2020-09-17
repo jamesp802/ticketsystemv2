@@ -20,6 +20,7 @@ class AddTicket extends React.Component {
     show: false,
     ticketName: "",
     ticketDescription: "",
+    assignedTo: [],
     projectId: this.props.projectId,
     tableId: this.props.tableId,
   };
@@ -37,12 +38,29 @@ class AddTicket extends React.Component {
     });
   };
 
+  handleAssign = (e) => {
+    let assigned = Array.from(
+      event.target.selectedOptions,
+      (item) => item.value.split('::')
+    )
+
+    // split to touples, handle in server
+
+    this.setState(
+      {
+        assignedTo: assigned,
+      },
+      () => console.log(this.state.assignedTo)
+    );
+  };
+
   handleSubmit = () => {
     axios
       .post("/api/tickets/new", {
         ticket: {
           ticketName: this.state.ticketName,
           ticketDescription: this.state.ticketDescription,
+          assignedTo: this.state.assignedTo,
         },
         projectId: this.props.projectId,
         tableId: this.props.tableId,
@@ -90,6 +108,15 @@ class AddTicket extends React.Component {
                 <Form.Label>Ticket Description:</Form.Label>
                 <Form.Control />
               </Form.Group>
+              <Form.Group
+                controlId="assignMemberSelect"
+                onChange={this.handleAssign}
+              >
+                <Form.Label>Assign To:</Form.Label>
+                <Form.Control as="select" multiple>
+                  <MemberList members={this.props.members} />
+                </Form.Control>
+              </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -105,5 +132,20 @@ class AddTicket extends React.Component {
     );
   }
 }
+
+const MemberList = ({ members }) => {
+  let users = [];
+  for (let id in members) {
+    users.push(members[id]);
+  }
+
+  return users.map((user, index) => {
+    return (
+      <option key={index} value={`${user.username}::${user._id}`}>
+        {user.username}
+      </option>
+    );
+  });
+};
 
 export default AddTicket;

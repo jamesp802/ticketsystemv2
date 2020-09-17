@@ -23,7 +23,8 @@ import { withRouter } from "react-router-dom";
 
 import Board from "../board/board";
 import AddTable from "../board/helpers/addTable";
-import BuildTeam from "../board/helpers/buildTeam"
+import BuildTeam from "../board/helpers/buildTeam";
+import MemberList from "./memberList";
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
@@ -48,6 +49,11 @@ const ProjectTitle = styled.div`
   grid-row-start: 1;
   text-align: center;
   padding: 30px;
+`;
+
+const TeamContainer = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 3;
 `;
 
 class ProjectOverview extends React.Component {
@@ -95,9 +101,17 @@ class ProjectOverview extends React.Component {
               dashboard={selectedProject.dashboard}
               projectId={this.props.match.params.id}
               update={this.getProject}
+              members={selectedProject.members}
             />
           </BoardContainer>
-          <BuildTeam projectId={this.props.match.params.id} update={this.getProject}/>
+          <TeamContainer>
+            <BuildTeam
+              projectId={this.props.match.params.id}
+              update={this.getProject}
+            />
+
+            <MemberList members={selectedProject.members} />
+          </TeamContainer>
         </Container>
       );
     }
