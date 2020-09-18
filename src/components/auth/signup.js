@@ -8,6 +8,8 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUserData } from "../../redux/actions/userActions";
 
+import fireIcon from "../../../images/icons/fireicon.png"
+
 const Container = styled.div`
   display: grid;
   grid-template-columns: 50px auto 50px;
@@ -15,13 +17,19 @@ const Container = styled.div`
 `;
 
 const FormContainer = styled.div`
-  display: flex;
-  justify-content: center;
   grid-column-start: 2;
   grid-row-start: 2;
+  max-width: 500px;
+  min-width: 400px;
+  min-height: 500px;
+  // max-height: 600px;
+  display: block;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
 `;
 
-const ErrorMessage = styled.span`
+const ErrorMessage = styled.div`
   color: red;
 `;
 
@@ -91,9 +99,16 @@ class UserSignUp extends React.Component {
     return (
       <Container>
         <FormContainer>
+          <img
+            src={fireIcon}
+            style={{ display: "block", margin: "auto", width: "75px" }}
+          />
+          <h1 style={{ textAlign: "center", padding: "10px" }}>
+            Pyrotech.io Sign Up
+          </h1>
           <Form>
             {errorMessage === "" ? null : (
-              <ErrorMessage>{errorMessage}</ErrorMessage>
+              <ErrorMessage>Something went wrong!</ErrorMessage>
             )}
             <Form.Group
               controlId="formBasicUsername"
@@ -125,8 +140,11 @@ class UserSignUp extends React.Component {
               <Form.Label>Re-Enter Password</Form.Label>
               <Form.Control type="password" placeholder="Password" />
             </Form.Group>
-            <Button variant="primary" onClick={this.handleSubmit}>
+            <Button variant="success" onClick={this.handleSubmit} block>
               Sign Up
+            </Button>
+            <Button variant="secondary" href="/login" block>
+              Log In
             </Button>
           </Form>
         </FormContainer>

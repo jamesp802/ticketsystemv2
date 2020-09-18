@@ -8,26 +8,30 @@ import { ListGroup, Button } from "react-bootstrap";
 
 import { setSelectedProject } from "../../redux/actions/projectActions";
 
-import AddProject from "../project/addProject"
+import AddProject from "../project/addProject";
 
 class ProjectList extends React.Component {
   render() {
     const { projects } = this.props.user;
 
     return (
-      <ListGroup>
-        {projects.map((project) => (
-          <ListGroup.Item key={project.project_id}>
-            <Link
-              key={project.project_id}
-              to={`/dash/project/${project.project_id}`}
-            >
-              {project.project_name}
-            </Link>
-          </ListGroup.Item>
-        ))}
-        <AddProject />
-      </ListGroup>
+      <>
+        <h2 style={{paddingBottom: '8px'}}>Projects:</h2>
+        <ListGroup>
+          {projects.map((project) => (
+            <ListGroup.Item key={project.project_id}>
+              <Link
+                key={project.project_id}
+                to={`/dash/project/${project.project_id}`}
+              >
+                {project.project_name}
+              </Link>
+            </ListGroup.Item>
+          ))}
+          <br/>
+          <AddProject />
+        </ListGroup>
+      </>
     );
   }
 }

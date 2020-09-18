@@ -19,6 +19,8 @@ const Container = styled.div`
 `;
 const Title = styled.h3`
   padding: 8px;
+  text-align: center;
+  border-bottom: 2px solid lightgray;
 `;
 const TicketList = styled.div`
   padding: 8px;

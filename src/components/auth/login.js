@@ -9,10 +9,27 @@ import { getUserData } from "../../redux/actions/userActions";
 
 import styled from "styled-components";
 
+import fireIcon from "../../../images/icons/fireicon.png"
+
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+  grid-template-rows: 100px auto 100px;
 `;
+
+const FormContainer = styled.div`
+  grid-column-start: 2;
+  grid-row-start: 2;
+  max-width: 500px;
+  min-width: 400px;
+  min-height: 500px;
+  max-height: 600px;
+  display: block;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+`;
+
 class Login extends React.Component {
   state = {
     redirectToReferrer: false,
@@ -69,25 +86,36 @@ class Login extends React.Component {
 
     return (
       <Container>
-        <Form>
-          {errorMessage === "" ? null : <p>{errorMessage}</p>}
-          <Form.Group controlId="formBasicEmail" onChange={this.handleChange}>
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
-          </Form.Group>
+        <FormContainer>
+          <img
+            src={fireIcon}
+            style={{ display: "block", margin: "auto", width: "75px" }}
+          />
+          <h1 style={{ textAlign: "center", padding: "10px" }}>
+            Pyrotech.io Login
+          </h1>
+          <Form>
+            {errorMessage === "" ? null : <p>{errorMessage}</p>}
+            <Form.Group controlId="formBasicEmail" onChange={this.handleChange}>
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
+            </Form.Group>
 
-          <Form.Group
-            controlId="formBasicPassword"
-            onChange={this.handleChange}
-          >
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Button variant="primary" onClick={this.login}>
-            Login
-          </Button>
-          <Button href="/signup">Sign Up</Button>
-        </Form>
+            <Form.Group
+              controlId="formBasicPassword"
+              onChange={this.handleChange}
+            >
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+              <Button variant="success" onClick={this.login} block>
+                Login
+              </Button>
+              <Button variant="secondary" href="/signup" block>
+                Sign Up
+              </Button>
+          </Form>
+        </FormContainer>
       </Container>
     );
   }

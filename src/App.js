@@ -19,6 +19,7 @@ import GitSignIn from "./components/auth/gitSignIn";
 import UserSignUp from "./components/auth/signup";
 import Login from "./components/auth/login";
 import ProjectOverview from "./components/project/projectOverview"
+import Home from "./components/home/homepage"
 
 import { useSelector } from "react-redux";
 
@@ -65,16 +66,13 @@ class App extends React.Component {
 
     return (
       <>
-        <NavBar />
+        <NavBar user={this.props.user}/>
         <Router>
           <Switch>
+            <Route exact path='/' component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/signup">
-              <UserSignUp />
-            </Route>
-            <Route path="/oauth">
-              <GitSignIn />
-            </Route>
+            <Route path="/signup" component={UserSignUp}/>
+            <Route path="/oauth" component={GitSignIn}/>
             <PrivateRoute path="/dash/project/:id" component={ProjectOverview} />
             <PrivateRoute path="/dash" component={UserDashBoard} />
           </Switch>

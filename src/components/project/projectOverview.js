@@ -33,10 +33,6 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 50px auto 50px;
   grid-template-rows: 100px auto 100px;
-  // background-color: rgb(255,255,255,0.8)
-  // background-image: url("https://www.freevector.com/uploads/vector/preview/30349/Abstract_background_vector_1.jpg")
-  background-size: cover;
-  background-repeat: norepeat;
 `;
 
 const BoardContainer = styled.div`

@@ -2,7 +2,8 @@
   float: left;
   min-width: 100vw;
   min-height: 100vh;
-  /* background-image: url(https://www.freevector.com/uploads/vector/preview/30349/Abstract_background_vector_1.jpg); */
-  background-repeat: no-repeat;
-  background-size: cover;
+}
+
+body {
+  background-color: #0e1217 !important;
 }
