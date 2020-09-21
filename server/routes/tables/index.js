@@ -5,9 +5,9 @@ const auth = require("../auth/middleware/auth");
 const Table = require("../../../database/models/tableModels");
 
 router.post("/new", auth, (req, res) => {
-  const { tableName, projectId, forClaims } = req.body;
-  console.log(tableName, projectId)
-  Table.addTable(tableName, projectId, forClaims)
+  const { tableName, projectId, forClaims, forCompleted } = req.body;
+  // console.log(tableName, projectId)
+  Table.addTable(tableName, projectId, forClaims, forCompleted)
   .then(() => {
     res.sendStatus(201);
   })

@@ -104,18 +104,30 @@ class Board extends React.Component {
         [newEnd._id]: newEnd,
       },
     };
-// if droppable id = claim
-    this.setState(newState, () => {
-      axios.post(`/api/teams/claim`, {
-        dashboard: newState,
-        projectId: this.state.tickets[draggableId].project_id,
-        ticketId: draggableId,
+    // if droppable id = claim
+    if (destination.droppableId === "claimed") {
+      this.setState(newState, () => {
+        axios.post(`/api/teams/claim`, {
+          dashboard: newState,
+          projectId: this.state.tickets[draggableId].project_id,
+          ticketId: draggableId,
+        });
       });
-    });
+    }
+
+    if (destination.droppableId === "completed") {
+      this.setState(newState, () => {
+        axios.post(`/api/teams/complete`, {
+          dashboard: newState,
+          projectId: this.state.tickets[draggableId].project_id,
+          ticketId: draggableId,
+        });
+      });
+    }
   };
 
   render() {
-    console.log(this.props)
+    console.log(this.props);
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="all-tables" direction="horizontal" type="table">

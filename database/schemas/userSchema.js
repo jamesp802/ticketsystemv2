@@ -51,6 +51,14 @@ const UserSchema = mongoose.Schema({
     tickets: Object,
     table_order: { type: Array, default: ["assigned", "claimed", "completed"] },
   },
+  stats: {
+    type: Object,
+    default: {
+      assigned: 0,
+      claimed: 0,
+      completed: 0,
+    },
+  },
 });
 
 module.exports = mongoose.model("user", UserSchema);

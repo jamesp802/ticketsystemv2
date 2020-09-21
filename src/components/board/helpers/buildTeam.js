@@ -54,11 +54,18 @@ class BuildTeam extends React.Component {
         projectId: this.props.projectId,
       })
       .then(() => {
+        return axios.post("/api/tables/new", {
+          tableName: "Claimed Tickets",
+          projectId: this.props.projectId,
+          forClaims: true,
+        });
+      })
+      .then(() => {
         axios
           .post("/api/tables/new", {
-            tableName: "Claimed Tickets",
+            tableName: "Completed Tickets",
             projectId: this.props.projectId,
-            forClaims: true,
+            forCompleted: true,
           })
           .then(() => {
             this.props.update();

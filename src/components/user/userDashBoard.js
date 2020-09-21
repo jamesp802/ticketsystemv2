@@ -89,6 +89,7 @@ class UserDashBoard extends React.Component {
 
   render() {
     const { user } = this.props;
+    console.log(user)
 
     return (
       // <ContentContainer>
@@ -114,11 +115,14 @@ class UserDashBoard extends React.Component {
               <h2 style={{ textAlign: "center" }}>Performance</h2>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <ul style={{ listStyle: "none" }}>
-                  <li>
-                    <b>Tickets Claimed:</b> 130
+                <li>
+                    <b>Tickets Assigned:</b> {user.stats.assigned}
                   </li>
                   <li>
-                    <b>Tickets Completed:</b> 120
+                    <b>Tickets Claimed:</b> {user.stats.claimed}
+                  </li>
+                  <li>
+                    <b>Tickets Completed:</b> {user.stats.completed}
                   </li>
                   <li>
                     <b>Hours Logged:</b> 967.07 hrs

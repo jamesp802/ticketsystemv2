@@ -5,6 +5,7 @@ const Project = require("../../schemas/projectSchema");
 module.exports = (dashboard, projectId, userId, ticketId) => {
   return User.findById(userId).then((user) => {
     user.dashboard = dashboard;
+    user.stats.claimed += 1;
     return User.findByIdAndUpdate(userId, user).then(() => {
       return Project.findById(projectId).then((project) => {
 

@@ -41,4 +41,15 @@ router.post("/claim", auth, (req, res) => {
     });
 });
 
+router.post("/complete", auth, (req, res) => {
+  User.updateAndComplete(req.body.dashboard, req.body.projectId, req.user.id, req.body.ticketId)
+  .then(() => {
+    res.sendStatus(201);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+})
+
 module.exports = router;

@@ -4,10 +4,11 @@ const User = require("../../schemas/userSchema");
 
 const Table = require("../../schemas/tableSchema");
 
-module.exports = (table_name, project_id, forClaims) => {
+module.exports = (table_name, project_id, forClaims, forCompleted) => {
   const table = new Table({
     table_name: table_name,
-    forClaims: forClaims
+    forClaims: forClaims,
+    forCompleted: forCompleted,
   });
 
   console.log(table_name, project_id);
@@ -15,7 +16,6 @@ module.exports = (table_name, project_id, forClaims) => {
   return table.save().then((table) => {
     let tableData = table;
     return Project.findById(project_id).then((project) => {
-
       if (project.dashboard.tables === undefined) {
         project.dashboard.tables = {
           [tableData._id]: table,
