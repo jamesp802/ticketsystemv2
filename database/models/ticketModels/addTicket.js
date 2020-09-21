@@ -11,6 +11,7 @@ module.exports = (ticketInfo, project_id, table_id) => {
     ticket_name: ticketInfo.ticketName,
     ticket_description: ticketInfo.ticketDescription,
     assignedTo: ticketInfo.assignedTo,
+    project_id: ticketInfo.projectId,
   });
 
   return ticket.save().then((ticketData) => {

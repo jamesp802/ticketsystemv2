@@ -48,18 +48,30 @@ class BuildTeam extends React.Component {
   };
 
   handleCreate = () => {
-    axios.post("/api/teams/add", { members: this.state.members, projectId: this.props.projectId }).then(() => {
-      this.props.update();
-      this.setState({
-        show: false,
+    axios
+      .post("/api/teams/add", {
+        members: this.state.members,
+        projectId: this.props.projectId,
+      })
+      .then(() => {
+        axios
+          .post("/api/tables/new", {
+            tableName: "Claimed Tickets",
+            projectId: this.props.projectId,
+            forClaims: true,
+          })
+          .then(() => {
+            this.props.update();
+          });
       });
-    });
   };
 
   render() {
     return (
       <>
-        <Button variant="secondary" onClick={this.handleShow} block>Build Team</Button>
+        <Button variant="secondary" onClick={this.handleShow} block>
+          Build Team
+        </Button>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>

@@ -4,9 +4,10 @@ const User = require("../../schemas/userSchema");
 
 const Table = require("../../schemas/tableSchema");
 
-module.exports = (table_name, project_id) => {
+module.exports = (table_name, project_id, forClaims) => {
   const table = new Table({
     table_name: table_name,
+    forClaims: forClaims
   });
 
   console.log(table_name, project_id);

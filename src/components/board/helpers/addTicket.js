@@ -61,6 +61,7 @@ class AddTicket extends React.Component {
           ticketName: this.state.ticketName,
           ticketDescription: this.state.ticketDescription,
           assignedTo: this.state.assignedTo,
+          projectId: this.props.projectId,
         },
         projectId: this.props.projectId,
         tableId: this.props.tableId,

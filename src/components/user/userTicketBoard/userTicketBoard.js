@@ -21,6 +21,7 @@ class Board extends React.Component {
 
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
+    console.log(result);
 
     if (!destination) {
       return;
@@ -103,15 +104,18 @@ class Board extends React.Component {
         [newEnd._id]: newEnd,
       },
     };
-
+// if droppable id = claim
     this.setState(newState, () => {
-      axios.post(`/api/projects/${this.props.projectId}`, {
+      axios.post(`/api/teams/claim`, {
         dashboard: newState,
+        projectId: this.state.tickets[draggableId].project_id,
+        ticketId: draggableId,
       });
     });
   };
 
   render() {
+    console.log(this.props)
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="all-tables" direction="horizontal" type="table">
