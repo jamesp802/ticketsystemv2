@@ -18,27 +18,38 @@ router.post("/new", auth, (req, res) => {
 
 router.get("/:project_id", auth, (req, res) => {
   Project.getProject(req.params.project_id)
-  //FIXME: verify ownership, public private boards, member
-  .then((project) => {
-    if (project.owners[req.user.id] === undefined) {
-      return res.sendStatus(401);
-    }
-    res.send(project);
-  }).catch(e => {
-    console.log(e);
-    res.sendStatus(404)
-  })
-})
+    //FIXME: verify ownership, public private boards, member
+    .then((project) => {
+      if (project.owners[req.user.id] === undefined) {
+        return res.sendStatus(401);
+      }
+      res.send(project);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.sendStatus(404);
+    });
+});
 
-router.post("/:project_id", auth, (req,res) => {
+router.post("/:project_id", auth, (req, res) => {
   Project.updateProject(req.params.project_id, req.body.dashboard)
-  .then(() => {
-    res.sendStatus(201);
-  })
-  .catch((e) => {
-    console.log(e);
-    res.sendStatus(500)
-  })
-})
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.sendStatus(500);
+    });
+});
+
+router.delete("/:project_id", auth, (req, res) => {
+  Project.deleteProject(req.params.project_id, req.user)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

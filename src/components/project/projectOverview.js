@@ -25,31 +25,54 @@ import Board from "../board/board";
 import AddTable from "../board/helpers/addTable";
 import BuildTeam from "../board/helpers/buildTeam";
 import MemberList from "./memberList";
+import ProjectSettings from "./projectSettings";
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 50px auto 50px;
-  grid-template-rows: 100px auto 100px;
+  grid-template-columns: 200px auto 50px;
+  grid-template-rows: 50px 100px auto 100px;
 `;
 
 const BoardContainer = styled.div`
+  // grid-column-start: 2;
+  // grid-row-start: 2;
+  display: flex;
+  justify-content: center;
   grid-column-start: 2;
-  grid-row-start: 2;
+  grid-row-start: 3;
+  background-color: whitesmoke;
+  border: 5px solid rgb(52 58 64);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 5px;
+  min-height: 500px;
 `;
 
 const ProjectTitle = styled.div`
   grid-column-start: 2;
-  grid-row-start: 1;
+  grid-row-start: 2;
   text-align: center;
-  padding: 30px;
+  background-color: whitesmoke;
+  border: 5px solid rgb(52 58 64);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
 `;
 
 const TeamContainer = styled.div`
-  grid-column-start: 2;
-  grid-row-start: 3;
+  grid-column-start: 1;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  background-color: whitesmoke;
+  border: 5px solid rgb(52 58 64);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
 `;
 
 class ProjectOverview extends React.Component {
@@ -90,7 +113,8 @@ class ProjectOverview extends React.Component {
       return (
         <Container>
           <ProjectTitle>
-            <h2>{selectedProject.project_name}</h2>
+            <h2 style={{ padding: "8px" }}>{selectedProject.project_name}</h2>
+            {/* <ProjectSettings project={selectedProject} update={this.getProject}/> */}
           </ProjectTitle>
           <BoardContainer>
             <Board
@@ -101,12 +125,12 @@ class ProjectOverview extends React.Component {
             />
           </BoardContainer>
           <TeamContainer>
+            <h2 style={{ textAlign: "center" }}>Team:</h2>
+            <MemberList members={selectedProject.members} />
             <BuildTeam
               projectId={this.props.match.params.id}
               update={this.getProject}
             />
-
-            <MemberList members={selectedProject.members} />
           </TeamContainer>
         </Container>
       );

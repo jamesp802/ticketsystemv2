@@ -8,6 +8,10 @@ const Container = styled.div`
   border: 1px solid lightgrey;
   border-radius: 2px;
   background-color: ${(props) => (props.isDragging ? "lightblue" : "white")};
+  text-align: center;
+  font-weight: bold;
+  font-size : 20px;
+  padding: 8px;
 `;
 
 // import TicketSettings from "./helpers/ticketSettings";

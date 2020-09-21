@@ -8,10 +8,10 @@
 
 import React from "react";
 import styled from "styled-components";
-import { userData, projectData } from "../../initialData";
+// import { userData, projectData } from "../../initialData";
 
 import { connect } from "react-redux";
-// import { getProject } from "../../redux/actions/projectActions";
+import { getUserData } from "../../redux/actions/userActions";
 
 import GitHub from "../auth/gitSignIn";
 
@@ -64,6 +64,7 @@ const UserContentContainer = styled.div`
   display: grid;
   grid-template-columns: 200px auto 100px;
   grid-template-rows: auto;
+  padding: 8px;
 `;
 
 const Profile = styled.div`
@@ -85,6 +86,7 @@ const ProjectListContainer = styled.div`
 `;
 
 class UserDashBoard extends React.Component {
+
   render() {
     const { user } = this.props;
 
@@ -156,10 +158,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // getProject: (projectId) => getProject(projectId),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     update: () => dispatch(getUserData),
+//   };
+// };
 
-export default connect(mapStateToProps, null)(UserDashBoard);
+export default connect(mapStateToProps)(UserDashBoard);

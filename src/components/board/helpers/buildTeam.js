@@ -59,7 +59,7 @@ class BuildTeam extends React.Component {
   render() {
     return (
       <>
-        <Button onClick={this.handleShow}>Build Team</Button>
+        <Button variant="secondary" onClick={this.handleShow} block>Build Team</Button>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>

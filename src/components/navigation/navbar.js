@@ -11,7 +11,7 @@ import {
 
 const NavBar = ({ user }) => (
   <Navbar bg="dark" expand="lg">
-    <Navbar.Brand href="#home">Pyrotech.io</Navbar.Brand>
+    <Navbar.Brand href="/">Pyrotech.io</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
@@ -34,7 +34,7 @@ const NavBar = ({ user }) => (
               })}
             </NavDropdown>
             <Nav.Link href="/dash">Dashboard</Nav.Link>
-            <Nav.Link href="/logout">Logout</Nav.Link>
+            <Nav.Link href="/logout" style={{justif: 'right'}}>Logout</Nav.Link>
           </>
         )}
       </Nav>
