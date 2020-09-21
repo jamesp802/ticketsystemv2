@@ -12,6 +12,16 @@ export const getUserData = () => (dispatch) => {
         user: response.data,
       });
     })
+    .then(() => {
+      setInterval(() => {
+        return axios.get("/user/me").then((response) => {
+          dispatch({
+            type: "user",
+            user: response.data,
+          });
+        });
+      }, 10000);
+    })
     .catch((err) => {
       console.log("USER ACTION: getUserData ERROR:", err);
     });

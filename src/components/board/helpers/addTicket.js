@@ -23,6 +23,7 @@ class AddTicket extends React.Component {
     assignedTo: [],
     projectId: this.props.projectId,
     tableId: this.props.tableId,
+    label: "",
   };
 
   handleShow = () => {
@@ -39,19 +40,22 @@ class AddTicket extends React.Component {
   };
 
   handleAssign = (e) => {
-    let assigned = Array.from(
-      event.target.selectedOptions,
-      (item) => item.value.split('::')
-    )
+    //FIXME: double check this
+    let assigned = Array.from(e.target.selectedOptions, (item) =>
+      item.value.split("::")
+    );
 
     // split to touples, handle in server
 
-    this.setState(
-      {
-        assignedTo: assigned,
-      },
-      () => console.log(this.state.assignedTo)
-    );
+    this.setState({
+      assignedTo: assigned,
+    });
+  };
+
+  handleLabel = (e) => {
+    this.setState({
+      label: e.target.value,
+    });
   };
 
   handleSubmit = () => {
@@ -62,6 +66,7 @@ class AddTicket extends React.Component {
           ticketDescription: this.state.ticketDescription,
           assignedTo: this.state.assignedTo,
           projectId: this.props.projectId,
+          label: this.state.label,
         },
         projectId: this.props.projectId,
         tableId: this.props.tableId,
@@ -108,6 +113,15 @@ class AddTicket extends React.Component {
               >
                 <Form.Label>Ticket Description:</Form.Label>
                 <Form.Control />
+              </Form.Group>
+              <Form.Group controlId="assignLabel" onChange={this.handleLabel}>
+                <Form.Label>Label:</Form.Label>
+                <Form.Control as="select">
+                  <option>Research</option>
+                  <option>Implementation</option>
+                  <option>Review</option>
+                  <option>Test</option>
+                </Form.Control>
               </Form.Group>
               <Form.Group
                 controlId="assignMemberSelect"

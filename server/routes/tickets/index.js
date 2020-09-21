@@ -8,7 +8,7 @@ const Project = require("../../../database/models/projectModels");
 router.post("/new", auth, (req, res) => {
   // body, project_id, table_id
   const { ticket, projectId, tableId } = req.body;
-  Ticket.addTicket(ticket, projectId, tableId)
+  Ticket.addTicket(ticket, projectId, tableId, req.user)
     .then(() => {
       res.sendStatus(201);
     })
@@ -22,14 +22,14 @@ router.delete("/:projectId/:tableId/:ticketId", auth, (req, res) => {
   const { projectId, tableId, ticketId } = req.params;
   const { user } = req;
   Project.deleteTicketFromProject(projectId, tableId, ticketId, user)
-  .then((data) => {
-    // console.log(data);
-    res.sendStatus(204);
-  })
-  .catch((err) => {
-    console.log(err);
-    res.send(401)
-  })
+    .then((data) => {
+      // console.log(data);
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(401);
+    });
 });
 
 module.exports = router;

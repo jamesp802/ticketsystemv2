@@ -18,8 +18,8 @@ import UserDashBoard from "./components/user/userDashBoard";
 import GitSignIn from "./components/auth/gitSignIn";
 import UserSignUp from "./components/auth/signup";
 import Login from "./components/auth/login";
-import ProjectOverview from "./components/project/projectOverview"
-import Home from "./components/home/homepage"
+import ProjectOverview from "./components/project/projectOverview";
+import Home from "./components/home/homepage";
 
 import { useSelector } from "react-redux";
 
@@ -51,11 +51,18 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.login().then(() => {
-      this.setState({
-        isLoaded: true,
+    this.props
+      .login()
+      .then(() => {
+        this.setState({
+          isLoaded: true,
+        });
+      })
+      .then(() => {
+        // setInterval(() => {
+        //   this.props.login();
+        // }, 3000);
       });
-    });
   }
 
   render() {
@@ -66,14 +73,17 @@ class App extends React.Component {
 
     return (
       <>
-        <NavBar user={this.props.user}/>
+        <NavBar user={this.props.user} />
         <Router>
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
-            <Route path="/signup" component={UserSignUp}/>
-            <Route path="/oauth" component={GitSignIn}/>
-            <PrivateRoute path="/dash/project/:id" component={ProjectOverview} />
+            <Route path="/signup" component={UserSignUp} />
+            <Route path="/oauth" component={GitSignIn} />
+            <PrivateRoute
+              path="/dash/project/:id"
+              component={ProjectOverview}
+            />
             <PrivateRoute path="/dash" component={UserDashBoard} />
           </Switch>
         </Router>

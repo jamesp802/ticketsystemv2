@@ -82,26 +82,29 @@ class ProjectOverview extends React.Component {
 
   componentDidMount() {
     this.getProject();
+    setInterval(() => {
+      this.getProject();
+    }, 10000);
   }
 
   getProject = () => {
-    this.setState(
-      {
-        isLoaded: false,
-      },
-      () => {
-        axios
-          .get(`/api/projects/${this.props.match.params.id}`)
-          .then(({ data }) => {
-            this.props.setSelectedProject(data);
-          })
-          .then(() => {
-            this.setState({
-              isLoaded: true,
-            });
-          });
-      }
-    );
+    // this.setState(
+    //   {
+    //     isLoaded: false,
+    //   },
+    // () => {
+    axios
+      .get(`/api/projects/${this.props.match.params.id}`)
+      .then(({ data }) => {
+        this.props.setSelectedProject(data);
+      })
+      .then(() => {
+        this.setState({
+          isLoaded: true,
+        });
+      });
+    // }
+    // );
   };
 
   render() {

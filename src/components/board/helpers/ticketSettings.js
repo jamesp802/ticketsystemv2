@@ -60,20 +60,24 @@ class TicketSettings extends React.Component {
   deleteTicket = () => {
     const { projectId, tableId } = this.props;
     const ticketId = this.props.ticket._id;
-    axios.delete(`/api/tickets/${projectId}/${tableId}/${ticketId}`).then(() => {
-      this.props.update();
-    });
+    axios
+      .delete(`/api/tickets/${projectId}/${tableId}/${ticketId}`)
+      .then(() => {
+        this.props.update();
+      });
   };
 
   saveEdits = () => {
     const { projectId, tableId } = this.props;
     const ticketId = this.props.ticket._id;
-    axios.put(`/api/tickets/${projectId}/${tableId}/${ticketId}`, {
-      // ticket info here
-    }).then(() => {
-      this.props.update();
-    });
-  }
+    axios
+      .put(`/api/tickets/${projectId}/${tableId}/${ticketId}`, {
+        // ticket info here
+      })
+      .then(() => {
+        this.props.update();
+      });
+  };
 
   render() {
     const { show, handleShow, ticket } = this.props;
@@ -134,15 +138,17 @@ class TicketSettings extends React.Component {
                   <li>
                     <b>Label:</b>
                   </li>
-                  drop down here for ticket types
+                  {ticket.label}
                   <li>
                     <b>Created by:</b>
                   </li>
-                  created by user name here
+                  {ticket.createdBy.username}
                   <li>
                     <b>Assigned to:</b>
                   </li>
-                  list of users assigned to this ticket here
+                  {/* {ticket.assingedTo.map((user) => {
+                    return <li>{user[0]}</li>;
+                  })} */}
                 </ul>
               )}
             </Modal.Body>

@@ -6,6 +6,8 @@ const TicketSchema = mongoose.Schema({
   assignedTo: Array,
   createdAt: { type: Date, default: Date.now() },
   project_id: String,
+  label: String,
+  createdBy: Object,
 });
 
 module.exports = mongoose.model("ticket", TicketSchema);

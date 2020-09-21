@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 8px;
 `;
 
-// import TicketSettings from "./helpers/ticketSettings";
+import TicketSettings from "../../board/helpers/ticketSettings";
 
 class Ticket extends React.Component {
   state = {
@@ -44,6 +44,14 @@ class Ticket extends React.Component {
             </Container>
           )}
         </Draggable>
+        <TicketSettings
+          show={this.state.showTicketSettings}
+          handleShow={this.handleShowTicketSettings}
+          ticket={this.props.ticket}
+          update={this.props.update}
+          tableId={this.props.tableId}
+          projectId={this.props.projectId}
+        />
       </>
     );
   }

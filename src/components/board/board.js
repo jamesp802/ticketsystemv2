@@ -19,6 +19,10 @@ const Container = styled.div`
 class Board extends React.Component {
   state = this.props.dashboard;
 
+  componentWillReceiveProps(props) {
+    this.setState(props.dashboard);
+  }
+
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
 

@@ -8,6 +8,7 @@
 
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 // import { userData, projectData } from "../../initialData";
 
 import { connect } from "react-redux";
@@ -86,10 +87,22 @@ const ProjectListContainer = styled.div`
 `;
 
 class UserDashBoard extends React.Component {
+  state = {
+    git: null,
+  };
+
+  componentDidMount() {
+    axios.get("/user").then((response) => {
+      console.log(response.data);
+      this.setState({
+        git: response.data,
+      });
+    });
+  }
 
   render() {
     const { user } = this.props;
-    console.log(user)
+    console.log(user);
 
     return (
       // <ContentContainer>
@@ -98,7 +111,11 @@ class UserDashBoard extends React.Component {
           <UserContentContainer>
             <Profile>
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKCdkfRY6P9BDL8rex_-H0vu1vqTs0J7gQvyH3SNGTOQ&usqp=CAU&ec=45702844"
+                src={
+                  this.state.git === null
+                    ? "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKCdkfRY6P9BDL8rex_-H0vu1vqTs0J7gQvyH3SNGTOQ&usqp=CAU&ec=45702844"
+                    : this.state.git.avatar_url
+                }
                 style={{
                   display: "block",
                   margin: "auto",
@@ -109,13 +126,17 @@ class UserDashBoard extends React.Component {
               />
               Hello, {user.username}
               <br />
-              <GitHub />
+              {this.state.git === null ? (
+                <GitHub />
+              ) : (
+                <p>GitHub: {this.state.git.login}</p>
+              )}
             </Profile>
             <div style={{ gridColumnStart: "2" }}>
               <h2 style={{ textAlign: "center" }}>Performance</h2>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <ul style={{ listStyle: "none" }}>
-                <li>
+                  <li>
                     <b>Tickets Assigned:</b> {user.stats.assigned}
                   </li>
                   <li>
