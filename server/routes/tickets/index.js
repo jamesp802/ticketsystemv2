@@ -18,6 +18,20 @@ router.post("/new", auth, (req, res) => {
     });
 });
 
+router.put("/edit/:projectId/ticket/:ticketId", auth, (req, res) => {
+  const { projectId, ticketId } = req.params;
+  const { body } = req;
+  Project.updateTicket(projectId, ticketId, body)
+  .then((data) => {
+    // console.log(data);
+    res.sendStatus(201);
+  })
+  .catch((err) => {
+    console.log(err);
+    res.send(500);
+  });
+})
+
 router.delete("/:projectId/:tableId/:ticketId", auth, (req, res) => {
   const { projectId, tableId, ticketId } = req.params;
   const { user } = req;

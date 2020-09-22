@@ -35,35 +35,33 @@ class Table extends React.Component {
   render() {
     return (
       // <Draggable draggableId={this.props.table._id} index={this.props.index}>
-        // {(provided) => (
-          // <Container {...provided.draggableProps} ref={provided.innerRef}>
-            <Container>
-            {/* <Title {...provided.dragHandleProps}> */}
-              <Title>
-              {this.props.table.table_name}
-            </Title>
-            <Droppable droppableId={this.props.table._id}>
-              {(provided, snapshot) => (
-                <TicketList
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  isDraggingOver={snapshot.isDraggingOver}
-                >
-                  {this.props.tickets.map((ticket, index) => (
-                    <Ticket
-                      key={ticket._id}
-                      ticket={ticket}
-                      index={index}
-                      update={this.props.update}
-                      tableId={this.props.table._id}
-                      projectId={this.props.projectId}
-                    />
-                  ))}
-                  {provided.placeholder}
-                </TicketList>
-              )}
-            </Droppable>
-          </Container>
+      // {(provided) => (
+      // <Container {...provided.draggableProps} ref={provided.innerRef}>
+      <Container>
+        {/* <Title {...provided.dragHandleProps}> */}
+        <Title>{this.props.table.table_name}</Title>
+        <Droppable droppableId={this.props.table._id}>
+          {(provided, snapshot) => (
+            <TicketList
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {this.props.tickets.map((ticket, index) => (
+                <Ticket
+                  key={ticket._id}
+                  ticket={ticket}
+                  index={index}
+                  update={this.props.update}
+                  tableId={this.props.table._id}
+                  projectId={this.props.projectId}
+                />
+              ))}
+              {provided.placeholder}
+            </TicketList>
+          )}
+        </Droppable>
+      </Container>
       //   )}
       // </Draggable>
     );

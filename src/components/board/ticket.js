@@ -10,11 +10,15 @@ const Container = styled.div`
   background-color: ${(props) => (props.isDragging ? "lightblue" : "white")};
   text-align: center;
   font-weight: bold;
-  font-size : 20px;
+  font-size: 20px;
   padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 import TicketSettings from "./helpers/ticketSettings";
+import LabelTicket from "./helpers/labelTicket";
 
 class Ticket extends React.Component {
   state = {
@@ -41,6 +45,7 @@ class Ticket extends React.Component {
               onClick={this.handleShowTicketSettings}
             >
               {this.props.ticket.ticket_name}
+              <LabelTicket label={this.props.ticket.label} />
             </Container>
           )}
         </Draggable>
@@ -51,6 +56,7 @@ class Ticket extends React.Component {
           update={this.props.update}
           tableId={this.props.tableId}
           projectId={this.props.projectId}
+          members={this.props.members}
         />
       </>
     );

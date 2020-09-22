@@ -3,6 +3,7 @@ const getProject = require("./getProject");
 const updateProject = require("./updateProject");
 const deleteTicketFromProject = require("./deleteTicket");
 const deleteProject = require("./deleteProject");
+const updateTicket = require("./updateTicket")
 
 module.exports = {
   addProject,
@@ -10,4 +11,5 @@ module.exports = {
   updateProject,
   deleteTicketFromProject,
   deleteProject,
+  updateTicket
 };

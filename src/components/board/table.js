@@ -14,8 +14,10 @@ const Container = styled.div`
   background-color: white;
   position: relative;
 
+
   display: flex;
   flex-direction: column;
+
 `;
 const Title = styled.h3`
   padding: 8px;
@@ -27,6 +29,7 @@ const TicketList = styled.div`
     props.isDraggingOver ? "whitesmoke" : "white"};
   flex-grow: 1;
   min-height: 100px;
+
 `;
 
 class Table extends React.Component {
@@ -59,6 +62,7 @@ class Table extends React.Component {
                       update={this.props.update}
                       tableId={this.props.table._id}
                       projectId={this.props.projectId}
+                      members={this.props.members}
                     />
                   ))}
                   {provided.placeholder}

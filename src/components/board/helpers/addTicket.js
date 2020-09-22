@@ -23,7 +23,7 @@ class AddTicket extends React.Component {
     assignedTo: [],
     projectId: this.props.projectId,
     tableId: this.props.tableId,
-    label: "",
+    label: "Research",
   };
 
   handleShow = () => {
@@ -148,7 +148,7 @@ class AddTicket extends React.Component {
   }
 }
 
-const MemberList = ({ members }) => {
+export const MemberList = ({ members }) => {
   let users = [];
   for (let id in members) {
     users.push(members[id]);
