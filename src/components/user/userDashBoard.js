@@ -26,7 +26,7 @@ import ProjectList from "./projectList";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 200px auto 50px;
+  grid-template-columns: 350px auto 50px;
   grid-template-rows: 10px auto auto 50px;
   padding: 20px;
 `;
@@ -41,18 +41,24 @@ const DashBoardContainer = styled.div`
   display: flex;
   justify-content: center;
   grid-column-start: 2;
-  grid-row-start: 3;
-  background-color: whitesmoke;
-  border: 5px solid rgb(52 58 64);
-  border-radius: 10px;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  // background-color: whitesmoke;
+  // border: 5px solid rgb(52 58 64);
+  // border-radius: 10px;
   padding: 8px;
   margin: 5px;
   min-height: 500px;
+  background-image: url("https://media.giphy.com/media/l0HlTy9x8FZo0XO1i/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
 `;
 
 const UserContainer = styled.div`
   // text-align: center;
-  grid-column-start: 2;
+  grid-column-start: 1;
   grid-row-start: 2;
   background-color: whitesmoke;
   border: 5px solid rgb(52 58 64);
@@ -61,21 +67,21 @@ const UserContainer = styled.div`
   margin: 5px;
 `;
 
-const UserContentContainer = styled.div`
-  display: grid;
-  grid-template-columns: 200px auto 100px;
-  grid-template-rows: auto;
-  padding: 8px;
-`;
+// const UserContentContainer = styled.div`
+//   display: grid;
+//   grid-template-columns: 200px auto 100px;
+//   grid-template-rows: auto;
+//   padding: 8px;
+// `;
 
 const Profile = styled.div`
-  grid-column-start: 1;
+  // grid-column-start: 1;
   text-align: center;
 `;
 
 const ProjectListContainer = styled.div`
   text-align: center;
-  grid-row-start: 2;
+  grid-row-start: 3;
   grid-row-end: 4;
   grid-column-start: 1;
   background-color: whitesmoke;
@@ -108,7 +114,7 @@ class UserDashBoard extends React.Component {
       // <ContentContainer>
       <Container>
         <UserContainer>
-          <UserContentContainer>
+          {/* <UserContentContainer> */}
             <Profile>
               <img
                 src={
@@ -132,7 +138,7 @@ class UserDashBoard extends React.Component {
                 <p>GitHub: {this.state.git.login}</p>
               )}
             </Profile>
-            <div style={{ gridColumnStart: "2" }}>
+            {/* <div style={{ gridColumnStart: "2" }}>
               <h2 style={{ textAlign: "center" }}>Performance</h2>
               <div style={{ display: "flex", justifyContent: "space-evenly" }}>
                 <ul style={{ listStyle: "none" }}>
@@ -161,8 +167,8 @@ class UserDashBoard extends React.Component {
                   style={{ width: "130px", float: "right", padding: "8px" }}
                 />
               </div>
-            </div>
-          </UserContentContainer>
+            </div> */}
+          {/* </UserContentContainer> */}
         </UserContainer>
         <ProjectListContainer>
           <ProjectList />

@@ -4,6 +4,7 @@ const User = require("../../schemas/userSchema");
 
 module.exports = (projectId, ticketId, ticketInfo) => {
   return Project.findById(projectId).then((proj) => {
+    //FIXME: unassign a member from ticket
     let newAssigned = ticketInfo.assignedTo;
     let newName = ticketInfo.ticketName;
     let newDescription = ticketInfo.ticketDescription;

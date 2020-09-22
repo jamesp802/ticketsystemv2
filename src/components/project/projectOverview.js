@@ -32,7 +32,7 @@ import { Button } from "react-bootstrap";
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 200px auto 50px;
+  grid-template-columns: 350px auto 50px;
   grid-template-rows: 50px 100px auto 100px;
 `;
 
@@ -42,17 +42,22 @@ const BoardContainer = styled.div`
   display: flex;
   justify-content: center;
   grid-column-start: 2;
-  grid-row-start: 3;
-  background-color: whitesmoke;
-  border: 5px solid rgb(52 58 64);
-  border-radius: 10px;
-  padding: 20px;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  // background-color: whitesmoke;
+  // border: 5px solid rgb(52 58 64);
+  // border-radius: 10px;
+  // padding: 20px;
   margin: 5px;
   min-height: 500px;
+  background-image: url("https://media.giphy.com/media/l0HlTy9x8FZo0XO1i/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 `;
 
 const ProjectTitle = styled.div`
-  grid-column-start: 2;
+  grid-column-start: 1;
   grid-row-start: 2;
   text-align: center;
   background-color: whitesmoke;
@@ -66,7 +71,7 @@ const ProjectTitle = styled.div`
 
 const TeamContainer = styled.div`
   grid-column-start: 1;
-  grid-row-start: 2;
+  grid-row-start: 3;
   grid-row-end: 4;
   background-color: whitesmoke;
   border: 5px solid rgb(52 58 64);
@@ -84,7 +89,7 @@ class ProjectOverview extends React.Component {
     this.getProject();
     setInterval(() => {
       this.getProject();
-    }, 10000);
+    }, 60000);
   }
 
   getProject = () => {
@@ -128,11 +133,12 @@ class ProjectOverview extends React.Component {
             />
           </BoardContainer>
           <TeamContainer>
-            <h2 style={{ textAlign: "center" }}>Team:</h2>
+            <h2 style={{ textAlign: "center" }}>Members</h2>
             <MemberList members={selectedProject.members} />
             <BuildTeam
               projectId={this.props.match.params.id}
               update={this.getProject}
+              members={selectedProject.members}
             />
           </TeamContainer>
         </Container>

@@ -14,6 +14,7 @@ import axios from "axios";
 
 const Container = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 class Board extends React.Component {
@@ -25,7 +26,6 @@ class Board extends React.Component {
 
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
-
 
     if (!destination) {
       return;
@@ -131,7 +131,6 @@ class Board extends React.Component {
   };
 
   render() {
-
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <Droppable droppableId="all-tables" direction="horizontal" type="table">
@@ -141,7 +140,7 @@ class Board extends React.Component {
                 const table = this.state.tables[table_id];
                 const tickets = table.ticket_ids.map((ticket_id, i) => {
                   if (this.state.tickets[ticket_id] === undefined) {
-                    table.ticket_ids.splice(i, 1)
+                    table.ticket_ids.splice(i, 1);
                     return;
                   } else {
                     return this.state.tickets[ticket_id];

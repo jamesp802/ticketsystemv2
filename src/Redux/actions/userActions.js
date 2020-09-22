@@ -20,7 +20,7 @@ export const getUserData = () => (dispatch) => {
             user: response.data,
           });
         });
-      }, 10000);
+      }, 60000);
     })
     .catch((err) => {
       console.log("USER ACTION: getUserData ERROR:", err);

@@ -11,6 +11,12 @@ class BuildTeam extends React.Component {
     results: [],
   };
 
+  componentWillReceiveProps(props) {
+    if (props.members) {
+      this.setState(Object.values(props.members));
+    }
+  }
+
   handleShow = () => {
     this.setState({
       show: !this.state.show,
@@ -74,17 +80,24 @@ class BuildTeam extends React.Component {
   };
 
   render() {
+    console.log(this.state.members);
     return (
       <>
         <Button variant="secondary" onClick={this.handleShow} block>
-          Build Team
+          Team Builder
         </Button>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>
-            <Modal.Title>Build Team</Modal.Title>
+            <Modal.Title>Team Builder</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <b>Members:</b>
+            <ul>
+              {this.state.members.map((member) => {
+                return <li>{member.username}</li>;
+              })}
+            </ul>
             <Form>
               <Form.Group controlId="query" onChange={this.handleChange}>
                 <Form.Label>Search Users:</Form.Label>

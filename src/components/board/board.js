@@ -14,6 +14,7 @@ import AddTable from "./helpers/addTable";
 
 const Container = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 class Board extends React.Component {

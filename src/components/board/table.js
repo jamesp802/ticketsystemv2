@@ -7,17 +7,22 @@ import Ticket from "./ticket";
 import AddTicket from "./helpers/addTicket";
 
 const Container = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+  // margin: 8px;
+  // border: 1px solid lightgrey;
+  // border-radius: 2px;
   width: 300px;
-  background-color: white;
+  // background-color: white;
   position: relative;
 
+  background-color: whitesmoke;
+  border: 5px solid rgb(52 58 64);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
 
   display: flex;
   flex-direction: column;
-
+  height: auto;
 `;
 const Title = styled.h3`
   padding: 8px;
@@ -29,49 +34,48 @@ const TicketList = styled.div`
     props.isDraggingOver ? "whitesmoke" : "white"};
   flex-grow: 1;
   min-height: 100px;
-
 `;
 
 class Table extends React.Component {
   render() {
     return (
-      <Draggable draggableId={this.props.table._id} index={this.props.index}>
-        {(provided) => (
-          <Container {...provided.draggableProps} ref={provided.innerRef}>
-            <Title {...provided.dragHandleProps}>
-              {this.props.table.table_name}
-            </Title>
-            <AddTicket
-              tableId={this.props.table._id}
-              projectId={this.props.projectId}
-              update={this.props.update}
-              members={this.props.members}
-            />
-            <Droppable droppableId={this.props.table._id}>
-              {(provided, snapshot) => (
-                <TicketList
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  isDraggingOver={snapshot.isDraggingOver}
-                >
-                  {this.props.tickets.map((ticket, index) => (
-                    <Ticket
-                      key={ticket._id}
-                      ticket={ticket}
-                      index={index}
-                      update={this.props.update}
-                      tableId={this.props.table._id}
-                      projectId={this.props.projectId}
-                      members={this.props.members}
-                    />
-                  ))}
-                  {provided.placeholder}
-                </TicketList>
-              )}
-            </Droppable>
-          </Container>
-        )}
-      </Draggable>
+        <Draggable draggableId={this.props.table._id} index={this.props.index} className='test'>
+          {(provided) => (
+            <Container {...provided.draggableProps} ref={provided.innerRef}>
+              <Title {...provided.dragHandleProps}>
+                {this.props.table.table_name}
+              </Title>
+              <AddTicket
+                tableId={this.props.table._id}
+                projectId={this.props.projectId}
+                update={this.props.update}
+                members={this.props.members}
+              />
+              <Droppable droppableId={this.props.table._id}>
+                {(provided, snapshot) => (
+                  <TicketList
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    isDraggingOver={snapshot.isDraggingOver}
+                  >
+                    {this.props.tickets.map((ticket, index) => (
+                      <Ticket
+                        key={ticket._id}
+                        ticket={ticket}
+                        index={index}
+                        update={this.props.update}
+                        tableId={this.props.table._id}
+                        projectId={this.props.projectId}
+                        members={this.props.members}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </TicketList>
+                )}
+              </Droppable>
+            </Container>
+          )}
+        </Draggable>
     );
   }
 }

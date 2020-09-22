@@ -16,7 +16,7 @@ class ProjectList extends React.Component {
 
     return (
       <>
-        <h2 style={{paddingBottom: '8px'}}>Projects:</h2>
+        <h2 style={{paddingBottom: '8px'}}>My Projects</h2>
         <ListGroup>
           {projects.map((project) => (
             <ListGroup.Item key={project.project_id}>
@@ -30,6 +30,21 @@ class ProjectList extends React.Component {
           ))}
           <br/>
           <AddProject />
+        </ListGroup>
+        <hr/>
+        <h2 style={{paddingBottom: '8px'}}>Memberships</h2>
+        <ListGroup>
+          {projects.map((project) => (
+            <ListGroup.Item key={project.project_id}>
+              <Link
+                key={project.project_id}
+                to={`/dash/project/${project.project_id}`}
+              >
+                {project.project_name}
+              </Link>
+            </ListGroup.Item>
+          ))}
+          <br/>
         </ListGroup>
       </>
     );

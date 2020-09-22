@@ -7,12 +7,19 @@ import Ticket from "./ticket";
 // import AddTicket from "./helpers/addTicket";
 
 const Container = styled.div`
-  margin: 8px;
-  border: 1px solid lightgrey;
-  border-radius: 2px;
+  // margin: 8px;
+  // border: 1px solid lightgrey;
+  // border-radius: 2px;
   width: 300px;
-  background-color: white;
+  // background-color: white;
   position: relative;
+  height: auto;
+
+  background-color: whitesmoke;
+  border: 5px solid rgb(52 58 64);
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
 
   display: flex;
   flex-direction: column;
