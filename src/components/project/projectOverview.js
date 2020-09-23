@@ -26,6 +26,7 @@ import AddTable from "../board/helpers/addTable";
 import BuildTeam from "../board/helpers/buildTeam";
 import MemberList from "./memberList";
 import ProjectSettings from "./projectSettings";
+import ConnectRepo from "../board/helpers/connectRepo"
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
@@ -33,7 +34,7 @@ import { Button } from "react-bootstrap";
 const Container = styled.div`
   display: grid;
   grid-template-columns: 350px auto 50px;
-  grid-template-rows: 50px 100px auto 100px;
+  grid-template-rows: 50px auto auto 100px;
 `;
 
 const BoardContainer = styled.div`
@@ -123,6 +124,7 @@ class ProjectOverview extends React.Component {
           <ProjectTitle>
             <h2 style={{ padding: "8px" }}>{selectedProject.project_name}</h2>
             {/* <ProjectSettings project={selectedProject} update={this.getProject}/> */}
+            <ConnectRepo/>
           </ProjectTitle>
           <BoardContainer>
             <Board

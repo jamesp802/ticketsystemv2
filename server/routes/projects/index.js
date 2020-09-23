@@ -55,4 +55,16 @@ router.delete("/:project_id", auth, (req, res) => {
     });
 });
 
+router.post("/repo/connect", auth, (req, res) => {
+  Project.connectRepo(req.body.repo, req.user.id)
+  .then((data) => {
+    console.log(data)
+    res.send(data);
+  })
+  .catch((e) => {
+    console.log(e)
+    res.sendStatus(500);
+  });
+})
+
 module.exports = router;

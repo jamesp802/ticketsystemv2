@@ -5,6 +5,7 @@ const deleteTicketFromProject = require("./deleteTicket");
 const deleteProject = require("./deleteProject");
 const updateTicket = require("./updateTicket");
 const unassignTicket = require("./unassignTicket");
+const connectRepo = require("./connectRepo");
 
 module.exports = {
   addProject,
@@ -14,4 +15,5 @@ module.exports = {
   deleteProject,
   updateTicket,
   unassignTicket,
+  connectRepo,
 };

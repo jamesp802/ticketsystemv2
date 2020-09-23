@@ -39,23 +39,18 @@ module.exports = (app) => {
         if (!token) return res.status(401).json({ message: "Auth Error" });
 
         const decoded = jwt.verify(token, "randomString");
-        // console.log(decoded);
 
-        return axios.get("/user");
         let user = User.findById(decoded.user.id)
           .then((user) => {
-            console.log(user);
             user.gitAccess = response.data.access_token;
             user.save();
           })
           .then((data) => {
-            // console.log(data);
             res.redirect("/dash");
           })
           .catch((err) => {
-            res.send(500).json({
-              message: "ERROR: failed to save access token",
-            });
+            // console.log(err);
+            res.sendStatus(500);
           });
       });
   });
@@ -70,13 +65,16 @@ module.exports = (app) => {
           Authorization: `token ${gitAccess}`,
         },
       })
-      .then((response) => {
+      .then((data) => {
         return User.findByIdAndUpdate(req.user.id, {
-          git: { login: response.data.login, avatar: response.data.avatar_url },
+          git: { login: data.data.login, avatar: data.data.avatar_url },
+        }).then(() => {
+          res.sendStatus(200);
         });
       })
-      .then(() => {
-        res.sendStatus(200);
+      .catch((e) => {
+        // console.log(e);
+        res.sendStatus(404);
       });
   });
 };
