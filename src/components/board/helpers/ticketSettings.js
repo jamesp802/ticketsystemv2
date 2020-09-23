@@ -51,20 +51,16 @@ class TicketSettings extends React.Component {
     });
   };
 
-  handleSubmit = () => {
-    // axios
-    //   .post("/api/tickets/new", {
-    //     ticket: {
-    //       ticketName: this.state.ticketName,
-    //       ticketDescription: this.state.ticketDescription,
-    //     },
-    //     projectId: this.props.projectId,
-    //     tableId: this.props.tableId,
-    //   })
-    //   .then(() => {
-    //     this.handleShow();
-    //     // this.props.update();
-    //   });
+  handleUnassignMember = (e) => {
+    axios
+      .put("/api/teams/unassign", {
+        projectId: this.props.projectId,
+        ticketId: this.props.ticket._id,
+        userId: e.target.id,
+      })
+      .then(() => {
+        this.props.update();
+      });
   };
 
   toggleEdit = () => {
@@ -80,6 +76,7 @@ class TicketSettings extends React.Component {
       .delete(`/api/tickets/${projectId}/${tableId}/${ticketId}`)
       .then(() => {
         this.props.update();
+        this.handleShow();
       });
   };
 
@@ -95,6 +92,7 @@ class TicketSettings extends React.Component {
         assignedTo,
       })
       .then(() => {
+        this.handleShow();
         this.props.update();
       });
   };
@@ -193,11 +191,13 @@ class TicketSettings extends React.Component {
                     </li>
                   )}
                   {ticket.assignedTo.map((user) => {
-                    return <li>{user[0]}</li>;
+                    return <li onClick={this.handleUnassignMember} id={user[1]}>{user[0]}</li>;
                   })}
                   <li>
                     {/* <b>Project Link:</b> */}
-                    <a href={`/dash/project/${this.props.ticket.project_id}`}>Project Link</a>
+                    <a href={`/dash/project/${this.props.ticket.project_id}`}>
+                      Project Link
+                    </a>
                   </li>
                 </ul>
               )}

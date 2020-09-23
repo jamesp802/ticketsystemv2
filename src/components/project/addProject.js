@@ -56,7 +56,7 @@ class AddProject extends React.Component {
                 controlId="formBasicProjectName"
                 onChange={this.handleChange}
               >
-                <Form.Label>Table Name:</Form.Label>
+                <Form.Label>Project Name:</Form.Label>
                 <Form.Control />
               </Form.Group>
             </Form>

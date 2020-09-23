@@ -9,8 +9,8 @@ module.exports = (projectId, ticketId, ticketInfo) => {
     let newName = ticketInfo.ticketName;
     let newDescription = ticketInfo.ticketDescription;
     let newLabel = ticketInfo.label;
+    console.log(newAssigned)
 
-    let membersToUpdateArray = proj.dashboard.tickets[ticketId].assignedTo;
 
     proj.dashboard.tickets[ticketId].assignedTo = newAssigned;
     proj.dashboard.tickets[ticketId].ticket_name = newName;
@@ -19,16 +19,19 @@ module.exports = (projectId, ticketId, ticketInfo) => {
 
     const newTicket = proj.dashboard.tickets[ticketId];
 
-    return Promise.all(
-      membersToUpdateArray.map((user) => {
-        User.findById(user[1]).then((member) => {
-          member.dashboard.tickets[ticketId] = newTicket;
-          return User.findByIdAndUpdate(user[1], {
-            dashboard: member.dashboard,
-          });
+
+    let membersToUpdateArray = proj.dashboard.tickets[ticketId].assignedTo;
+    membersToUpdateArray = membersToUpdateArray.map((user) => {
+      return User.findById(user[1]).then((member) => {
+        member.dashboard.tickets[ticketId] = newTicket;
+        member.dashboard.tables.assigned.ticket_ids.push(ticketId);
+        return User.findByIdAndUpdate(user[1], {
+          dashboard: member.dashboard,
         });
-      })
-    ).then(() => {
+      });
+    });
+
+    return Promise.all(membersToUpdateArray).then(() => {
       return Project.findByIdAndUpdate(projectId, {
         dashboard: proj.dashboard,
       });

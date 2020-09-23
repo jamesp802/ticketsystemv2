@@ -49,7 +49,7 @@ const BoardContainer = styled.div`
   // border-radius: 10px;
   // padding: 20px;
   margin: 5px;
-  min-height: 500px;
+  // min-height: 500px;
   background-image: url("https://media.giphy.com/media/l0HlTy9x8FZo0XO1i/giphy.gif");
   background-repeat: no-repeat;
   background-size: contain;

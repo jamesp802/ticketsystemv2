@@ -39,8 +39,9 @@ module.exports = (app) => {
         if (!token) return res.status(401).json({ message: "Auth Error" });
 
         const decoded = jwt.verify(token, "randomString");
-        console.log(decoded);
+        // console.log(decoded);
 
+        return axios.get("/user");
         let user = User.findById(decoded.user.id)
           .then((user) => {
             console.log(user);
@@ -48,7 +49,7 @@ module.exports = (app) => {
             user.save();
           })
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             res.redirect("/dash");
           })
           .catch((err) => {
@@ -69,8 +70,13 @@ module.exports = (app) => {
           Authorization: `token ${gitAccess}`,
         },
       })
-      .then((data) => {
-        res.send(data.data);
+      .then((response) => {
+        return User.findByIdAndUpdate(req.user.id, {
+          git: { login: response.data.login, avatar: response.data.avatar_url },
+        });
+      })
+      .then(() => {
+        res.sendStatus(200);
       });
   });
 };

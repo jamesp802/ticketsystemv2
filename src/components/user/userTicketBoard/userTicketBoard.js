@@ -138,14 +138,12 @@ class Board extends React.Component {
             <Container {...provided.droppableProps} ref={provided.innerRef}>
               {this.state.table_order.map((table_id, index) => {
                 const table = this.state.tables[table_id];
-                const tickets = table.ticket_ids.map((ticket_id, i) => {
-                  if (this.state.tickets[ticket_id] === undefined) {
-                    table.ticket_ids.splice(i, 1);
-                    return;
-                  } else {
-                    return this.state.tickets[ticket_id];
+                const tickets = table.ticket_ids.reduce((acc, ticket_id, i) => {
+                  if (this.state.tickets[ticket_id] !== undefined) {
+                    acc.push(this.state.tickets[ticket_id]);
                   }
-                });
+                  return acc;
+                }, []);
                 console.log(tickets);
 
                 return (

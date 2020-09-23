@@ -19,7 +19,8 @@ const Container = styled.div`
   border: 5px solid rgb(52 58 64);
   border-radius: 10px;
   padding: 8px;
-  margin: 5px;
+  margin: 20px;
+  margin-top: 0px;
 
   display: flex;
   flex-direction: column;
@@ -33,7 +34,7 @@ const TicketList = styled.div`
   padding: 8px;
   transition: background-color 0.2s ease;
   background-color: ${(props) =>
-    props.isDraggingOver ? "whitesmoke" : "white"};
+    props.isDraggingOver ? "white" : "whitesmoke"};
   flex-grow: 1;
   min-height: 100px;
 `;

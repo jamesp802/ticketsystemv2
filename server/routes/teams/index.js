@@ -31,7 +31,12 @@ router.post("/add", auth, (req, res) => {
 });
 
 router.post("/claim", auth, (req, res) => {
-  User.updateAndClaim(req.body.dashboard, req.body.projectId, req.user.id, req.body.ticketId)
+  User.updateAndClaim(
+    req.body.dashboard,
+    req.body.projectId,
+    req.user.id,
+    req.body.ticketId
+  )
     .then(() => {
       res.sendStatus(201);
     })
@@ -42,14 +47,31 @@ router.post("/claim", auth, (req, res) => {
 });
 
 router.post("/complete", auth, (req, res) => {
-  User.updateAndComplete(req.body.dashboard, req.body.projectId, req.user.id, req.body.ticketId)
-  .then(() => {
-    res.sendStatus(201);
-  })
-  .catch((err) => {
-    console.log(err);
-    res.sendStatus(500);
-  });
-})
+  User.updateAndComplete(
+    req.body.dashboard,
+    req.body.projectId,
+    req.user.id,
+    req.body.ticketId
+  )
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+router.put("/unassign", auth, (req, res) => {
+  const { projectId, ticketId, userId } = req.body;
+  Project.unassignTicket(projectId, ticketId, userId)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

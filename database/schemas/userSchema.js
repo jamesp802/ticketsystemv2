@@ -59,6 +59,17 @@ const UserSchema = mongoose.Schema({
       completed: 0,
     },
   },
+  git: {
+    type: Object,
+    default: {
+      login: "",
+      avatar: "",
+    },
+  },
+  memberships: [{
+    project_id: String,
+    project_name: String,
+  }],
 });
 
 module.exports = mongoose.model("user", UserSchema);

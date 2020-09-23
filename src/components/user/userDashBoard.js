@@ -31,21 +31,12 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-// const ContentContainer = styled.div`
-//   background-color: rgb(255, 255, 255, 0.9);
-//   margin: 20px;
-//   padding: 20px;
-// `;
-
 const DashBoardContainer = styled.div`
   display: flex;
   justify-content: center;
   grid-column-start: 2;
   grid-row-start: 2;
   grid-row-end: 4;
-  // background-color: whitesmoke;
-  // border: 5px solid rgb(52 58 64);
-  // border-radius: 10px;
   padding: 8px;
   margin: 5px;
   min-height: 500px;
@@ -53,11 +44,9 @@ const DashBoardContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-
 `;
 
 const UserContainer = styled.div`
-  // text-align: center;
   grid-column-start: 1;
   grid-row-start: 2;
   background-color: whitesmoke;
@@ -67,15 +56,7 @@ const UserContainer = styled.div`
   margin: 5px;
 `;
 
-// const UserContentContainer = styled.div`
-//   display: grid;
-//   grid-template-columns: 200px auto 100px;
-//   grid-template-rows: auto;
-//   padding: 8px;
-// `;
-
 const Profile = styled.div`
-  // grid-column-start: 1;
   text-align: center;
 `;
 
@@ -93,92 +74,44 @@ const ProjectListContainer = styled.div`
 `;
 
 class UserDashBoard extends React.Component {
-  state = {
-    git: null,
-  };
-
-  componentDidMount() {
-    axios.get("/user").then((response) => {
-      console.log(response.data);
-      this.setState({
-        git: response.data,
-      });
-    });
-  }
-
   render() {
     const { user } = this.props;
-    console.log(user);
 
     return (
-      // <ContentContainer>
       <Container>
         <UserContainer>
-          {/* <UserContentContainer> */}
-            <Profile>
-              <img
-                src={
-                  this.state.git === null
-                    ? "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKCdkfRY6P9BDL8rex_-H0vu1vqTs0J7gQvyH3SNGTOQ&usqp=CAU&ec=45702844"
-                    : this.state.git.avatar_url
-                }
-                style={{
-                  display: "block",
-                  margin: "auto",
-                  border: "1px solid lightgray",
-                  borderRadius: "50%",
-                  width: "100px",
-                }}
-              />
-              Hello, {user.username}
-              <br />
-              {this.state.git === null ? (
-                <GitHub />
-              ) : (
-                <p>GitHub: {this.state.git.login}</p>
-              )}
-            </Profile>
-            {/* <div style={{ gridColumnStart: "2" }}>
-              <h2 style={{ textAlign: "center" }}>Performance</h2>
-              <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                <ul style={{ listStyle: "none" }}>
-                  <li>
-                    <b>Tickets Assigned:</b> {user.stats.assigned}
-                  </li>
-                  <li>
-                    <b>Tickets Claimed:</b> {user.stats.claimed}
-                  </li>
-                  <li>
-                    <b>Tickets Completed:</b> {user.stats.completed}
-                  </li>
-                  <li>
-                    <b>Hours Logged:</b> 967.07 hrs
-                  </li>
-                  <li>
-                    <b>On Target Tickets:</b> 90
-                  </li>
-                </ul>
-                <img
-                  src={chart}
-                  style={{ width: "100px", float: "right", padding: "8px" }}
-                />
-                <img
-                  src={chart2}
-                  style={{ width: "130px", float: "right", padding: "8px" }}
-                />
-              </div>
-            </div> */}
-          {/* </UserContentContainer> */}
+          <Profile>
+            <img
+              src={
+                user.gitAccess === null
+                  ? "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTKCdkfRY6P9BDL8rex_-H0vu1vqTs0J7gQvyH3SNGTOQ&usqp=CAU&ec=45702844"
+                  : user.git.avatar
+              }
+              style={{
+                display: "block",
+                margin: "auto",
+                marginTop: "10px",
+                border: "1px solid lightgray",
+                borderRadius: "50%",
+                width: "100px",
+              }}
+            />
+            Hello, {user.username}
+            <br />
+            {user.gitAccess === null ? (
+              <GitHub />
+            ) : (
+              <p>GitHub: {user.git.login}</p>
+            )}
+          </Profile>
         </UserContainer>
         <ProjectListContainer>
           <ProjectList />
         </ProjectListContainer>
         <DashBoardContainer>
-          {/* FIXME: userboard will require a seperate component and API */}
           <Board dashboard={user.dashboard} />
         </DashBoardContainer>
       </Container>
-      // {/* </ContentContainer> */}
     );
   }
 }
@@ -188,11 +121,5 @@ const mapStateToProps = (state) => {
     user: state.user,
   };
 };
-
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     update: () => dispatch(getUserData),
-//   };
-// };
 
 export default connect(mapStateToProps)(UserDashBoard);

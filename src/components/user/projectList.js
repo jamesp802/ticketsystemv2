@@ -12,7 +12,8 @@ import AddProject from "../project/addProject";
 
 class ProjectList extends React.Component {
   render() {
-    const { projects } = this.props.user;
+    const { projects, memberships } = this.props.user;
+    console.log(this.props.user)
 
     return (
       <>
@@ -34,7 +35,7 @@ class ProjectList extends React.Component {
         <hr/>
         <h2 style={{paddingBottom: '8px'}}>Memberships</h2>
         <ListGroup>
-          {projects.map((project) => (
+          {memberships.map((project) => (
             <ListGroup.Item key={project.project_id}>
               <Link
                 key={project.project_id}

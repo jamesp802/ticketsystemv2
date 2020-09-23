@@ -13,6 +13,21 @@ export const getUserData = () => (dispatch) => {
       });
     })
     .then(() => {
+      // return axios
+      //   .get("/user")
+      //   .then((response) => {
+      //     console.log(response.data);
+      //     this.setState({
+      //       git: response.data,
+      //     });
+      //   })
+      //   .catch((e) => {
+      //     {
+      //       console.log("ERROR: ", e);
+      //     }
+      //   });
+    })
+    .then(() => {
       setInterval(() => {
         return axios.get("/user/me").then((response) => {
           dispatch({
