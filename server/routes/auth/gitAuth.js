@@ -1,5 +1,9 @@
 const axios = require("axios");
 
+const jwt = require("jsonwebtoken");
+const auth = require("./middleware/auth");
+const User = require("../../../database/schemas/userSchema");
+
 module.exports = (app) => {
   app.get("/user/signin/callback", (req, res, next) => {
     const { query } = req;
@@ -30,26 +34,49 @@ module.exports = (app) => {
         },
         config
       )
-      .then((data) => {
-        // add the user token to user on DB
-        console.log(data.data);
-        res.send(data.data);
+      .then((response) => {
+        const token = req.cookies.token;
+        if (!token) return res.status(401).json({ message: "Auth Error" });
+
+        const decoded = jwt.verify(token, "randomString");
+        // console.log(decoded);
+
+        return axios.get("/user");
+        let user = User.findById(decoded.user.id)
+          .then((user) => {
+            console.log(user);
+            user.gitAccess = response.data.access_token;
+            user.save();
+          })
+          .then((data) => {
+            // console.log(data);
+            res.redirect("/dash");
+          })
+          .catch((err) => {
+            res.send(500).json({
+              message: "ERROR: failed to save access token",
+            });
+          });
       });
   });
 
-  app.get("/user/", (req, res, next) => {
-    // will be from DB
-    const accessToken = "c974002827ea6bb2ed1f9a91291b0db4aa57a3ff";
+  app.get("/user/", auth, async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    const { gitAccess } = user;
 
     axios
       .get("https://api.github.com/user", {
         headers: {
-          Authorization: `token ${accessToken}`,
+          Authorization: `token ${gitAccess}`,
         },
       })
-      .then((data) => {
-        console.log(data.data);
-        res.send(data.data);
+      .then((response) => {
+        return User.findByIdAndUpdate(req.user.id, {
+          git: { login: response.data.login, avatar: response.data.avatar_url },
+        });
+      })
+      .then(() => {
+        res.sendStatus(200);
       });
   });
 };

@@ -1,0 +1,14 @@
+#app {
+  float: left;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+body {
+  background-color: #0e1217 !important;
+}
+.list-group-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -8,13 +8,21 @@ import styled from "styled-components";
 
 import { userData, projectData } from "../../initialData";
 import Table from "./table";
+import axios from "axios";
+
+import AddTable from "./helpers/addTable";
 
 const Container = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 class Board extends React.Component {
   state = this.props.dashboard;
+
+  componentWillReceiveProps(props) {
+    this.setState(props.dashboard);
+  }
 
   onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
@@ -40,8 +48,11 @@ class Board extends React.Component {
         table_order: newTableOrder,
       };
 
-      this.setState(newState);
-      // server logic
+      this.setState(newState, () => {
+        axios.post(`/api/projects/${this.props.projectId}`, {
+          dashboard: newState,
+        });
+      });
     }
 
     const start = this.state.tables[source.droppableId];
@@ -63,13 +74,16 @@ class Board extends React.Component {
         ...this.state,
         tables: {
           ...this.state.tables,
-          [newTable.table_id]: newTable,
+          [newTable._id]: newTable,
         },
       };
+      this.setState(newState, () => {
+        axios.post(`/api/projects/${this.props.projectId}`, {
+          dashboard: newState,
+        });
+      });
 
-      this.setState(newState);
       return;
-      // update database with reorder
     }
 
     const newTicketIds = Array.from(start.ticket_ids);
@@ -90,13 +104,16 @@ class Board extends React.Component {
       ...this.state,
       tables: {
         ...this.state.tables,
-        [newStart.table_id]: newStart,
-        [newEnd.table_id]: newEnd,
+        [newStart._id]: newStart,
+        [newEnd._id]: newEnd,
       },
     };
 
-    this.setState(newState);
-    // server logic
+    this.setState(newState, () => {
+      axios.post(`/api/projects/${this.props.projectId}`, {
+        dashboard: newState,
+      });
+    });
   };
 
   render() {
@@ -107,19 +124,26 @@ class Board extends React.Component {
             <Container {...provided.droppableProps} ref={provided.innerRef}>
               {this.state.table_order.map((table_id, index) => {
                 const table = this.state.tables[table_id];
-                const tickets = table.ticket_ids.map(
-                  (ticket_id) => this.state.tickets[ticket_id]
-                );
+                const tickets = table.ticket_ids.map((ticket_id) => {
+                  return this.state.tickets[ticket_id];
+                });
 
                 return (
                   <Table
-                    key={table.table_id}
+                    key={table._id}
                     table={table}
                     tickets={tickets}
                     index={index}
+                    projectId={this.props.projectId}
+                    update={this.props.update}
+                    members={this.props.members}
                   />
                 );
               })}
+              <AddTable
+                update={this.props.update}
+                projectId={this.props.projectId}
+              />
             </Container>
           )}
         </Droppable>
