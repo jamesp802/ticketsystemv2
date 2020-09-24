@@ -6,6 +6,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 import styled from "styled-components";
 import { MemberList } from "./addTicket";
+import CommitHistory from "./commitHistory"
 
 const AddSVG = styled.span`
   position: absolute;
@@ -15,6 +16,10 @@ const AddSVG = styled.span`
     cursor: pointer;
   }
 `;
+
+const ListContainer = styled.ul`
+  list-style: none;
+`
 
 class TicketSettings extends React.Component {
   state = {
@@ -171,7 +176,7 @@ class TicketSettings extends React.Component {
                   </Button>
                 </>
               ) : (
-                <ul>
+                <ListContainer>
                   <li>
                     <b>Description:</b>
                   </li>
@@ -191,7 +196,11 @@ class TicketSettings extends React.Component {
                     </li>
                   )}
                   {ticket.assignedTo.map((user) => {
-                    return <li onClick={this.handleUnassignMember} id={user[1]}>{user[0]}</li>;
+                    return (
+                      <li key={user[1]} onClick={this.handleUnassignMember} id={user[1]}>
+                        {user[0]}
+                      </li>
+                    );
                   })}
                   <li>
                     {/* <b>Project Link:</b> */}
@@ -199,7 +208,10 @@ class TicketSettings extends React.Component {
                       Project Link
                     </a>
                   </li>
-                </ul>
+                  {ticket.branch !== undefined ? (
+                    <CommitHistory branch={ticket.branch.commit.url} />
+                  ) : null}
+                </ListContainer>
               )}
             </Modal.Body>
             <Modal.Footer>

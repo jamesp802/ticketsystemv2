@@ -9,11 +9,14 @@ class BuildTeam extends React.Component {
     show: false,
     members: [],
     results: [],
+    makeBoards: this.props.members === undefined,
   };
 
   componentWillReceiveProps(props) {
     if (props.members) {
-      this.setState(Object.values(props.members));
+      this.setState({
+        members: Object.values(props.members),
+      });
     }
   }
 
@@ -53,34 +56,51 @@ class BuildTeam extends React.Component {
     });
   };
 
+  handleAddMore = () => {
+    axios.post("/api/teams/add", {
+      members: this.state.members,
+      projectId: this.props.projectId,
+    })
+    .then(() => {
+      this.handleShow()
+    })
+  };
+
   handleCreate = () => {
-    axios
-      .post("/api/teams/add", {
-        members: this.state.members,
-        projectId: this.props.projectId,
-      })
-      .then(() => {
-        return axios.post("/api/tables/new", {
-          tableName: "Claimed Tickets",
+    if (this.state.makeBoards === true) {
+      axios
+        .post("/api/teams/add", {
+          members: this.state.members,
           projectId: this.props.projectId,
-          forClaims: true,
-        });
-      })
-      .then(() => {
-        axios
-          .post("/api/tables/new", {
-            tableName: "Completed Tickets",
+        })
+        .then(() => {
+          return axios.post("/api/tables/new", {
+            tableName: "Claimed Tickets",
             projectId: this.props.projectId,
-            forCompleted: true,
-          })
-          .then(() => {
-            this.props.update();
+            forClaims: true,
           });
-      });
+        })
+        .then(() => {
+          axios
+            .post("/api/tables/new", {
+              tableName: "Completed Tickets",
+              projectId: this.props.projectId,
+              forCompleted: true,
+            })
+            .then(() => {
+              this.props.update();
+              this.setState({
+                makeBoards: false,
+                show: false,
+              });
+            });
+        });
+    } else {
+      this.handleAddMore();
+    }
   };
 
   render() {
-    console.log(this.state.members);
     return (
       <>
         <Button variant="secondary" onClick={this.handleShow} block>
@@ -94,8 +114,8 @@ class BuildTeam extends React.Component {
           <Modal.Body>
             <b>Members:</b>
             <ul>
-              {this.state.members.map((member) => {
-                return <li>{member.username}</li>;
+              {this.state.members.map((member, i) => {
+                return <li key={i}>{member.username}</li>;
               })}
             </ul>
             <Form>

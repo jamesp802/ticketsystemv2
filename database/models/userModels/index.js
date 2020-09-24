@@ -3,6 +3,7 @@ const addMembers = require("./addMembers");
 const assignTicket = require("./assignTicket");
 const updateAndClaim = require("./updateAndClaim");
 const updateAndComplete = require("./updateAndComplete");
+const clean = require("./clean");
 
 module.exports = {
   search,
@@ -10,4 +11,5 @@ module.exports = {
   assignTicket,
   updateAndClaim,
   updateAndComplete,
+  clean,
 };

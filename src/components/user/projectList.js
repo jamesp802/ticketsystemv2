@@ -13,39 +13,32 @@ import AddProject from "../project/addProject";
 class ProjectList extends React.Component {
   render() {
     const { projects, memberships } = this.props.user;
-    console.log(this.props.user)
 
     return (
       <>
-        <h2 style={{paddingBottom: '8px'}}>My Projects</h2>
+        <h2 style={{ paddingBottom: "8px" }}>My Projects</h2>
         <ListGroup>
-          {projects.map((project) => (
+          {projects.map((project, i) => (
             <ListGroup.Item key={project.project_id}>
-              <Link
-                key={project.project_id}
-                to={`/dash/project/${project.project_id}`}
-              >
+              <Link to={`/dash/project/${project.project_id}`}>
                 {project.project_name}
               </Link>
             </ListGroup.Item>
           ))}
-          <br/>
+          <br />
           <AddProject />
         </ListGroup>
-        <hr/>
-        <h2 style={{paddingBottom: '8px'}}>Memberships</h2>
+        <hr />
+        <h2 style={{ paddingBottom: "8px" }}>Memberships</h2>
         <ListGroup>
-          {memberships.map((project) => (
-            <ListGroup.Item key={project.project_id}>
-              <Link
-                key={project.project_id}
-                to={`/dash/project/${project.project_id}`}
-              >
+          {memberships.map((project, i) => (
+            <ListGroup.Item key={i}>
+              <Link to={`/dash/project/${project.project_id}`}>
                 {project.project_name}
               </Link>
             </ListGroup.Item>
           ))}
-          <br/>
+          <br />
         </ListGroup>
       </>
     );

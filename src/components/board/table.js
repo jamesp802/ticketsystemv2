@@ -50,6 +50,7 @@ class Table extends React.Component {
                 projectId={this.props.projectId}
                 update={this.props.update}
                 members={this.props.members}
+                connected={this.props.repo}
               />
               <Droppable droppableId={this.props.table._id}>
                 {(provided, snapshot) => (
@@ -67,6 +68,7 @@ class Table extends React.Component {
                         tableId={this.props.table._id}
                         projectId={this.props.projectId}
                         members={this.props.members}
+                        repo={this.props.repo}
                       />
                     ))}
                     {provided.placeholder}

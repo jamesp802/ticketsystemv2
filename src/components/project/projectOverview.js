@@ -26,7 +26,7 @@ import AddTable from "../board/helpers/addTable";
 import BuildTeam from "../board/helpers/buildTeam";
 import MemberList from "./memberList";
 import ProjectSettings from "./projectSettings";
-import ConnectRepo from "../board/helpers/connectRepo"
+import ConnectRepo from "../board/helpers/connectRepo";
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
@@ -66,8 +66,8 @@ const ProjectTitle = styled.div`
   border-radius: 10px;
   padding: 8px;
   margin: 5px;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 `;
 
 const TeamContainer = styled.div`
@@ -94,11 +94,6 @@ class ProjectOverview extends React.Component {
   }
 
   getProject = () => {
-    // this.setState(
-    //   {
-    //     isLoaded: false,
-    //   },
-    // () => {
     axios
       .get(`/api/projects/${this.props.match.params.id}`)
       .then(({ data }) => {
@@ -109,8 +104,6 @@ class ProjectOverview extends React.Component {
           isLoaded: true,
         });
       });
-    // }
-    // );
   };
 
   render() {
@@ -124,7 +117,15 @@ class ProjectOverview extends React.Component {
           <ProjectTitle>
             <h2 style={{ padding: "8px" }}>{selectedProject.project_name}</h2>
             {/* <ProjectSettings project={selectedProject} update={this.getProject}/> */}
-            <ConnectRepo/>
+
+            {selectedProject.repo === null ? (
+              <ConnectRepo
+                projectId={selectedProject._id}
+                update={this.getProject}
+              />
+            ) : (
+              <p>Repo: {selectedProject.repo.split('/').slice(4).join('/')}</p>
+            )}
           </ProjectTitle>
           <BoardContainer>
             <Board

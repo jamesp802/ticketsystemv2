@@ -137,6 +137,7 @@ class Board extends React.Component {
                     projectId={this.props.projectId}
                     update={this.props.update}
                     members={this.props.members}
+                    repo={this.state.repo}
                   />
                 );
               })}

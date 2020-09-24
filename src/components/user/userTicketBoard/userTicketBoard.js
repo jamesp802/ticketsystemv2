@@ -130,6 +130,24 @@ class Board extends React.Component {
     }
   };
 
+  cleaner = (table, tickets) => {
+    // updates db if dupe ticket assignment after reduction
+    table.ticket_ids = tickets;
+    const newState = {
+      ...this.state,
+      tables: {
+        ...this.state.tables,
+        [table._id]: table,
+      },
+    };
+
+    this.setState(newState, () => {
+      axios.put(`/api/teams/clean`, {
+        dashboard: newState,
+      });
+    });
+  };
+
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
@@ -137,15 +155,21 @@ class Board extends React.Component {
           {(provided) => (
             <Container {...provided.droppableProps} ref={provided.innerRef}>
               {this.state.table_order.map((table_id, index) => {
+                let needClean = false;
                 const table = this.state.tables[table_id];
                 const tickets = table.ticket_ids.reduce((acc, ticket_id, i) => {
                   if (this.state.tickets[ticket_id] !== undefined) {
                     acc.push(this.state.tickets[ticket_id]);
+                  } else {
+                    needClean = true;
                   }
                   return acc;
                 }, []);
-                console.log(tickets);
 
+                if (needClean === true) {
+                  this.cleaner(table, tickets);
+                  needClean = false;
+                }
                 return (
                   <Table
                     key={table._id}

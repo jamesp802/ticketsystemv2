@@ -9,6 +9,7 @@ const ProjectSchema = mongoose.Schema({
     table_order: Array,
   },
   members: Object,
+  repo: { type: String, default: null },
 });
 
 const Project = mongoose.model("project", ProjectSchema);

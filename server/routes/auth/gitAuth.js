@@ -55,7 +55,7 @@ module.exports = (app) => {
       });
   });
 
-  app.get("/user/", auth, async (req, res, next) => {
+  app.get("/user/git", auth, async (req, res, next) => {
     const user = await User.findById(req.user.id);
     const { gitAccess } = user;
 
@@ -66,6 +66,7 @@ module.exports = (app) => {
         },
       })
       .then((data) => {
+        console.log(data.data)
         return User.findByIdAndUpdate(req.user.id, {
           git: { login: data.data.login, avatar: data.data.avatar_url },
         }).then(() => {

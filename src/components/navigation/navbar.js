@@ -27,16 +27,17 @@ const NavBar = ({ user }) => (
             <NavDropdown title="Projects" id="basic-nav-dropdown">
               {user.projects.map((proj) => {
                 return (
-                  <NavDropdown.Item href={`/dash/project/${proj.project_id}`}>
+                  <NavDropdown.Item
+                    key={proj.project_id}
+                    href={`/dash/project/${proj.project_id}`}
+                  >
                     {proj.project_name}
                   </NavDropdown.Item>
                 );
               })}
             </NavDropdown>
             <Nav.Link href="/dash">Dashboard</Nav.Link>
-            <Nav.Link href="/logout">
-              Logout
-            </Nav.Link>
+            <Nav.Link href="/logout">Logout</Nav.Link>
           </>
         )}
       </Nav>

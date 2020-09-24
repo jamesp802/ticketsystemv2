@@ -25,9 +25,10 @@ class ConnectRepo extends React.Component {
 
   handleConnect = () => {
     axios
-      .post("/api/projects/repo/connect", { repo: this.state.repo })
+      .post("/api/projects/repo/connect", { repo: this.state.repo, projectId: this.props.projectId })
       .then((data) => {
-        console.log(data);
+        this.props.update();
+        this.handleShow();
       });
   };
 
@@ -43,8 +44,8 @@ class ConnectRepo extends React.Component {
           <Modal.Body>
             <Form>
               <Form.Group controlId="repo" onChange={this.handleChange}>
-                <Form.Label>GitHub Url:</Form.Label>
-                <Form.Control placeholder="www.github.com/" />
+                <Form.Label>Repo Name</Form.Label>
+                <Form.Control placeholder="My-Exact-Repo-Name" />
               </Form.Group>
             </Form>
           </Modal.Body>

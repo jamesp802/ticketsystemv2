@@ -8,6 +8,7 @@ const TicketSchema = mongoose.Schema({
   project_id: String,
   label: String,
   createdBy: Object,
+  branch: Object
 });
 
 module.exports = mongoose.model("ticket", TicketSchema);
