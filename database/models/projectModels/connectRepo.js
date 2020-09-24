@@ -2,7 +2,7 @@ const User = require("../../schemas/userSchema");
 const axios = require("axios");
 const Project = require("../../schemas/projectSchema");
 
-module.exports = (repo, user, projectId) => {
+module.exports = (repo, user) => {
   return User.findById(user).then((user) => {
     if (user.git.login === "") {
       return res.sendStatus(401);

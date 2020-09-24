@@ -31,6 +31,7 @@ class ListBranches extends React.Component {
         isLoaded: true,
       })
     })
+
   }
 
   selectBranch = (index) => {
@@ -46,7 +47,7 @@ class ListBranches extends React.Component {
     }
     return (
       <>
-        <h2 style={{ paddingBottom: "8px" }}>Connect Branch</h2>
+        <b style={{ paddingBottom: "8px" }}>Connect Branch</b>
         <ListGroup>
           {branches.map((branch, i) => (
             <ListGroup.Item id="branch" key={i} onClick={() => this.selectBranch(i)}>

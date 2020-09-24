@@ -7,14 +7,23 @@ module.exports = (userId, branch) => {
     let test = branch.split('/')
     test.pop()
     test = test.join('/')
-    return axios
-      .get(`${test}`, {
-        headers: {
-          Authorization: `token ${user.gitAccess}`,
-        },
-      })
-      .then((data) => {
-        return data.data;
-      });
+
+    if (user.gitAccess) {
+      return axios
+        .get(`${test}`, {
+          headers: {
+            Authorization: `token ${user.gitAccess}`,
+          },
+        })
+        .then((data) => {
+          return data.data;
+        });
+    } else {
+      return axios
+        .get(`${test}`)
+        .then((data) => {
+          return data.data;
+        });
+    }
   });
 };
