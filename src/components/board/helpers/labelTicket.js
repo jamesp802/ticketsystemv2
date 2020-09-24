@@ -10,7 +10,6 @@ const Indicator = styled.div`
 `;
 
 const LabelTicket = ({ label }) => {
-  console.log(label)
   if (label === "Research") {
     return <Indicator style={{ background: "blue" }} />;
   } else if (label === 'Review') {

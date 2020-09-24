@@ -74,4 +74,14 @@ router.put("/unassign", auth, (req, res) => {
     });
 });
 
+router.put("/clean", auth, (req, res) => {
+  User.clean(req.user.id, req.body.dashboard)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((e) => {
+      console.log(e);
+      res.sendStatus(500);
+    });
+});
 module.exports = router;

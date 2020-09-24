@@ -74,8 +74,30 @@ const ProjectListContainer = styled.div`
 `;
 
 class UserDashBoard extends React.Component {
+  state = {
+    isLoaded: false,
+  }
+
+  componentDidMount () {
+    axios.get('/user/git')
+    .then(() => {
+      this.setState({
+        isLoaded: true,
+      })
+    })
+    .catch(() => {
+      this.setState({
+        isLoaded: true,
+      })
+    })
+  }
+
   render() {
     const { user } = this.props;
+
+    if (this.state.isLoaded === false) {
+      return "loading..."
+    }
 
     return (
       <Container>

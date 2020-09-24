@@ -55,4 +55,37 @@ router.delete("/:project_id", auth, (req, res) => {
     });
 });
 
+router.post("/repo/branches", auth, (req, res) => {
+  Project.getBranches(req.user.id, req.body.projectId)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((e) => {
+    console.log(e)
+    res.sendStatus(404);
+  });
+})
+
+router.post("/repo/branch/commits", auth, (req, res) => {
+  Project.connectBranch(req.user.id, req.body.branch)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((e) => {
+    console.log(e)
+    res.sendStatus(404);
+  });
+})
+
+router.post("/repo/connect", auth, (req, res) => {
+  Project.connectRepo(req.body.repo, req.user.id, req.body.projectId)
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((e) => {
+    console.log(e)
+    res.sendStatus(404);
+  });
+})
+
 module.exports = router;

@@ -26,6 +26,7 @@ import AddTable from "../board/helpers/addTable";
 import BuildTeam from "../board/helpers/buildTeam";
 import MemberList from "./memberList";
 import ProjectSettings from "./projectSettings";
+import ConnectRepo from "../board/helpers/connectRepo";
 
 import styled from "styled-components";
 import { Button } from "react-bootstrap";
@@ -33,7 +34,7 @@ import { Button } from "react-bootstrap";
 const Container = styled.div`
   display: grid;
   grid-template-columns: 350px auto 50px;
-  grid-template-rows: 50px 100px auto 100px;
+  grid-template-rows: 50px auto auto 100px;
 `;
 
 const BoardContainer = styled.div`
@@ -65,8 +66,8 @@ const ProjectTitle = styled.div`
   border-radius: 10px;
   padding: 8px;
   margin: 5px;
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 `;
 
 const TeamContainer = styled.div`
@@ -89,15 +90,10 @@ class ProjectOverview extends React.Component {
     this.getProject();
     setInterval(() => {
       this.getProject();
-    }, 60000);
+    }, 5000);
   }
 
   getProject = () => {
-    // this.setState(
-    //   {
-    //     isLoaded: false,
-    //   },
-    // () => {
     axios
       .get(`/api/projects/${this.props.match.params.id}`)
       .then(({ data }) => {
@@ -108,8 +104,6 @@ class ProjectOverview extends React.Component {
           isLoaded: true,
         });
       });
-    // }
-    // );
   };
 
   render() {
@@ -123,6 +117,15 @@ class ProjectOverview extends React.Component {
           <ProjectTitle>
             <h2 style={{ padding: "8px" }}>{selectedProject.project_name}</h2>
             {/* <ProjectSettings project={selectedProject} update={this.getProject}/> */}
+
+            {selectedProject.repo === null ? (
+              <ConnectRepo
+                projectId={selectedProject._id}
+                update={this.getProject}
+              />
+            ) : (
+              <p>Repo: {selectedProject.repo.split('/').slice(4).join('/')}</p>
+            )}
           </ProjectTitle>
           <BoardContainer>
             <Board

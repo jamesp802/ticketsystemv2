@@ -28,6 +28,7 @@ module.exports = async (ticketInfo, project_id, table_id, userData) => {
       project_id: ticketInfo.projectId,
       label: ticketInfo.label,
       createdBy: creator,
+      branch: ticketInfo.branch,
     });
 
     return ticket.save().then((ticketData) => {

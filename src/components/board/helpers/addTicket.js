@@ -6,6 +6,8 @@ import { Modal, Button, Form } from "react-bootstrap";
 
 import styled from "styled-components";
 
+import ListBranches from "./listBranches";
+
 const AddSVG = styled.span`
   position: absolute;
   top: 0px;
@@ -24,6 +26,7 @@ class AddTicket extends React.Component {
     projectId: this.props.projectId,
     tableId: this.props.tableId,
     label: "Research",
+    branch: {},
   };
 
   handleShow = () => {
@@ -67,6 +70,7 @@ class AddTicket extends React.Component {
           assignedTo: this.state.assignedTo,
           projectId: this.props.projectId,
           label: this.state.label,
+          branch: this.state.branch,
         },
         projectId: this.props.projectId,
         tableId: this.props.tableId,
@@ -75,6 +79,12 @@ class AddTicket extends React.Component {
         this.handleShow();
         this.props.update();
       });
+  };
+
+  selectBranch = (branch) => {
+    this.setState({
+      branch: branch,
+    });
   };
   render() {
     const { show } = this.state;
@@ -132,6 +142,9 @@ class AddTicket extends React.Component {
                   <MemberList members={this.props.members} />
                 </Form.Control>
               </Form.Group>
+              {this.props.connected !== null && this.state.label === "Implementation" ? (
+                <ListBranches selectBranch={this.selectBranch} />
+              ) : null}
             </Form>
           </Modal.Body>
           <Modal.Footer>
