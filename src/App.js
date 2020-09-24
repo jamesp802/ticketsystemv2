@@ -59,9 +59,9 @@ class App extends React.Component {
         });
       })
       .then(() => {
-        // setInterval(() => {
-        //   this.props.login();
-        // }, 3000);
+        setInterval(() => {
+          this.props.login();
+        }, 5000);
       });
   }
 

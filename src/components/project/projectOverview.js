@@ -90,7 +90,7 @@ class ProjectOverview extends React.Component {
     this.getProject();
     setInterval(() => {
       this.getProject();
-    }, 60000);
+    }, 5000);
   }
 
   getProject = () => {

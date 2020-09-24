@@ -12,6 +12,12 @@ module.exports = (body, decodedUser) => {
           owner_username: user.username,
         },
       },
+      members: {
+        [user._id]: {
+          _id: user._id,
+          username: user.username,
+        },
+      },
       project_name: body.project_name,
     });
 
