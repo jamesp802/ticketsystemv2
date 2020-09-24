@@ -63,6 +63,7 @@ class BuildTeam extends React.Component {
     })
     .then(() => {
       this.handleShow()
+      this.props.update();
     })
   };
 
