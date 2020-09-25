@@ -12,3 +12,7 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.jumbotron {
+  padding-top: 0px;
+}
