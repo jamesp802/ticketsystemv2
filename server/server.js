@@ -21,6 +21,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../dist/")));
 
+app.get("/logout", (req, res) => {
+  res
+    .cookie("token", "deleted", {
+      maxAge: 0,
+      httpOnly: true,
+    })
+    .redirect("/");
+});
 
 require("./routes/auth/gitAuth")(app);
 
@@ -33,8 +41,8 @@ require("./routes/auth/gitAuth")(app);
 app.use("/user", user);
 
 // require("./routes")(app);
-const apiRouter = require('./routes/');
-app.use('/api/', apiRouter);
+const apiRouter = require("./routes/");
+app.use("/api/", apiRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/"));
