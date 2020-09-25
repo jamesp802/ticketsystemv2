@@ -17,7 +17,7 @@ module.exports = (newMembers, projectId) => {
     ).then((proj) => {
       // let memberships = proj.memberships === undefined ? [] : proj.memberships;
       let userIdArray = Object.keys(proj.members);
-      let promiseArray = userIdArray.map((member) => {
+      let promiseArray = userIdArray.slice(1).map((member) => {
         return User.findByIdAndUpdate(member, {
           $push: {
             memberships: {

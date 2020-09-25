@@ -9,11 +9,11 @@ import {
   Button,
 } from "react-bootstrap";
 
-import axios from "axios";
+// import axios from "axios";
 
-const logout = () => {
-  axios.get("/logout");
-};
+// const logout = () => {
+//   axios.get("/logout");
+// };
 
 const NavBar = ({ user }) => (
   <Navbar variant="dark" bg="dark" expand="lg">
