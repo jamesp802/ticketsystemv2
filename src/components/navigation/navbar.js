@@ -22,7 +22,7 @@ const NavBar = ({ user }) => (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/dev">Development</Nav.Link>
+        {/* <Nav.Link href="/dev">Development</Nav.Link> */}
         {user === null ? (
           <>
             <Nav.Link href="/login">Login</Nav.Link>
