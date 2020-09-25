@@ -9,6 +9,12 @@ import {
   Button,
 } from "react-bootstrap";
 
+import axios from "axios";
+
+const logout = () => {
+  axios.get("/logout");
+};
+
 const NavBar = ({ user }) => (
   <Navbar variant="dark" bg="dark" expand="lg">
     <Navbar.Brand href="/">Pyrotech.io</Navbar.Brand>
