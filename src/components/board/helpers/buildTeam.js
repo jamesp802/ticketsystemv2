@@ -9,16 +9,18 @@ class BuildTeam extends React.Component {
     show: false,
     members: [],
     results: [],
-    makeBoards: this.props.members.length === 0,
+    makeBoards: false,
+    isLoaded: false,
   };
 
-  componentWillReceiveProps(props) {
-    let members = Object.values(props.members);
-    let makeBoards = members.length === 1;
-    if (props.members) {
+  componentDidMount() {
+    if (this.props.members && this.state.isLoaded === false) {
+      let members = Object.values(this.props.members);
+      let makeBoards = members.length <= 1;
       this.setState({
         members: members,
         makeBoards: makeBoards,
+        isLoaded: true,
       });
     }
   }
@@ -62,7 +64,7 @@ class BuildTeam extends React.Component {
   handleAddMore = () => {
     axios
       .post("/api/teams/add", {
-        members: this.state.members,
+        members: this.state.members.slice(1),
         projectId: this.props.projectId,
       })
       .then(() => {
@@ -72,10 +74,11 @@ class BuildTeam extends React.Component {
   };
 
   handleCreate = () => {
+    console.log(this.state.members.slice(1), this.state.members)
     if (this.state.makeBoards === true) {
       axios
         .post("/api/teams/add", {
-          members: this.state.members,
+          members: this.state.members.slice(1),
           projectId: this.props.projectId,
         })
         .then(() => {
@@ -106,7 +109,9 @@ class BuildTeam extends React.Component {
   };
 
   render() {
-    console.log(this.state, this.props.members);
+    if (this.state.isLoaded === false) {
+      return null;
+    }
     return (
       <>
         <Button variant="secondary" onClick={this.handleShow} block>
