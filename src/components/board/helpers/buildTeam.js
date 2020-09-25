@@ -9,13 +9,16 @@ class BuildTeam extends React.Component {
     show: false,
     members: [],
     results: [],
-    makeBoards: this.props.members === undefined,
+    makeBoards: this.props.members.length === 0,
   };
 
   componentWillReceiveProps(props) {
+    let members = Object.values(props.members);
+    let makeBoards = members.length === 1;
     if (props.members) {
       this.setState({
-        members: Object.values(props.members),
+        members: members,
+        makeBoards: makeBoards,
       });
     }
   }
@@ -57,14 +60,15 @@ class BuildTeam extends React.Component {
   };
 
   handleAddMore = () => {
-    axios.post("/api/teams/add", {
-      members: this.state.members,
-      projectId: this.props.projectId,
-    })
-    .then(() => {
-      this.handleShow()
-      this.props.update();
-    })
+    axios
+      .post("/api/teams/add", {
+        members: this.state.members,
+        projectId: this.props.projectId,
+      })
+      .then(() => {
+        this.handleShow();
+        this.props.update();
+      });
   };
 
   handleCreate = () => {
@@ -102,6 +106,7 @@ class BuildTeam extends React.Component {
   };
 
   render() {
+    console.log(this.state, this.props.members);
     return (
       <>
         <Button variant="secondary" onClick={this.handleShow} block>
